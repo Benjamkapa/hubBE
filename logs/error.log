@@ -1,0 +1,478 @@
+2025-11-11T09:31:59: Auth middleware error: jwt expired
+2025-11-11T09:42:58: Auth middleware error: jwt expired
+2025-11-11T09:44:35: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:46:29: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:46:47: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:47:55: Auth middleware error: jwt expired
+2025-11-11T09:47:59: Auth middleware error: jwt expired
+2025-11-11T09:48:42: Auth middleware error: jwt expired
+2025-11-11T09:49:04: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:50:19: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:51:47: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:06:46: Auth middleware error: jwt expired
+2025-11-11T10:07:12: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:12:15: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:14:51: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:16:02: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:17:25: Auth middleware error: jwt expired
+2025-11-11T10:18:10: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:18:29: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:19:09: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:20:15: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:20:59: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:22:53: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:41:10: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:43:26: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:44:37: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:46:06: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:48:13: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:49:43: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:57:02: Auth middleware error: jwt expired
+2025-11-12T10:12:33: Auth middleware error: jwt expired
+2025-11-12T10:13:53: Auth middleware error: jwt expired
+2025-11-12T10:13:56: Auth middleware error: jwt expired
+2025-11-12T10:14:17: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:189:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-12T10:16:02: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:189:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-12T10:16:06: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:189:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-12T10:23:14: Auth middleware error: jwt expired
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)

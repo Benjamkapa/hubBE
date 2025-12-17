@@ -1,0 +1,793 @@
+2025-11-11T09:24:05: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T09:24:05: ✅ DB Successfully connected
+2025-11-11T09:26:52: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T09:26:52: ✅ DB Successfully connected
+2025-11-11T09:27:01: ::1 - - [11/Nov/2025:06:27:01 +0000] "GET /api/services?page=1&limit-10&category=clean&status=active HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:28:55: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T09:28:55: ✅ DB Successfully connected
+2025-11-11T09:29:20: ::1 - - [11/Nov/2025:06:29:20 +0000] "GET /api/services?page=1&limit-10&category=clean&status=active HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:29:27: ::1 - - [11/Nov/2025:06:29:27 +0000] "GET /api/services?page=1&limit-10&category=clean&status=active HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:29:37: ::1 - - [11/Nov/2025:06:29:37 +0000] "GET /api/services?page=1 HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:29:39: ::1 - - [11/Nov/2025:06:29:39 +0000] "GET /api/services?page=1 HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:29:41: ::1 - - [11/Nov/2025:06:29:41 +0000] "GET /api/services?page=1 HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:29:47: ::1 - - [11/Nov/2025:06:29:47 +0000] "GET /api/services?page=6 HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:29:51: ::1 - - [11/Nov/2025:06:29:51 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:30:54: ::1 - - [11/Nov/2025:06:30:54 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:30:57: ::1 - - [11/Nov/2025:06:30:57 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:30:59: ::1 - - [11/Nov/2025:06:30:59 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:31:02: ::1 - - [11/Nov/2025:06:31:02 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:31:02: ::1 - - [11/Nov/2025:06:31:02 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:31:21: ::1 - - [11/Nov/2025:06:31:21 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:31:23: ::1 - - [11/Nov/2025:06:31:23 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:31:59: Auth middleware error: jwt expired
+2025-11-11T09:31:59: ::1 - - [11/Nov/2025:06:31:59 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:33:35: ::1 - - [11/Nov/2025:06:33:35 +0000] "GET /api/services?page=1&limit=10&category=cleaning&status=active HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:34:18: ::1 - - [11/Nov/2025:06:34:18 +0000] "GET /api/services/house-cleaning-service HTTP/1.1" 404 29 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:34:48: ::1 - - [11/Nov/2025:06:34:48 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:35:26: ::1 - - [11/Nov/2025:06:35:26 +0000] "POST /api/auth/signout HTTP/1.1" 400 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:36:56: ::1 - - [11/Nov/2025:06:36:56 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:37:09: ::1 - - [11/Nov/2025:06:37:09 +0000] "POST /api/auth/signout HTTP/1.1" 400 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:38:38: ::1 - - [11/Nov/2025:06:38:38 +0000] "POST /api/auth/signout HTTP/1.1" 400 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:42:58: Auth middleware error: jwt expired
+2025-11-11T09:42:58: ::1 - - [11/Nov/2025:06:42:58 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:44:35: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:44:35: ::1 - - [11/Nov/2025:06:44:35 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:46:29: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:46:29: ::1 - - [11/Nov/2025:06:46:29 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:46:47: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:46:47: ::1 - - [11/Nov/2025:06:46:47 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:47:55: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T09:47:55: ✅ DB Successfully connected
+2025-11-11T09:47:55: Auth middleware error: jwt expired
+2025-11-11T09:47:55: ::1 - - [11/Nov/2025:06:47:55 +0000] "GET /api/auth/me HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:47:59: Auth middleware error: jwt expired
+2025-11-11T09:47:59: ::1 - - [11/Nov/2025:06:47:59 +0000] "GET /api/auth/me HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:48:30: ::1 - - [11/Nov/2025:06:48:30 +0000] "GET /api/services/house-cleaning-service HTTP/1.1" 404 29 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:48:37: ::1 - - [11/Nov/2025:06:48:37 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:48:42: Auth middleware error: jwt expired
+2025-11-11T09:48:42: ::1 - - [11/Nov/2025:06:48:42 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:48:49: ::1 - - [11/Nov/2025:06:48:49 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:49:04: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:49:04: ::1 - - [11/Nov/2025:06:49:04 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:50:19: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:50:19: ::1 - - [11/Nov/2025:06:50:19 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T09:51:18: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T09:51:18: ✅ DB Successfully connected
+2025-11-11T09:51:47: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T09:51:47: ::1 - - [11/Nov/2025:06:51:47 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:06:29: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T10:06:29: ✅ DB Successfully connected
+2025-11-11T10:06:46: Auth middleware error: jwt expired
+2025-11-11T10:06:46: ::1 - - [11/Nov/2025:07:06:46 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:06:52: ::1 - - [11/Nov/2025:07:06:52 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:07:01: ::1 - - [11/Nov/2025:07:07:01 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:07:12: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:07:12: ::1 - - [11/Nov/2025:07:07:12 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:12:11: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T10:12:11: ✅ DB Successfully connected
+2025-11-11T10:12:15: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:12:15: ::1 - - [11/Nov/2025:07:12:15 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:14:51: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:14:51: ::1 - - [11/Nov/2025:07:14:51 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:15:42: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T10:15:42: ✅ DB Successfully connected
+2025-11-11T10:16:02: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:16:02: ::1 - - [11/Nov/2025:07:16:02 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:17:25: Auth middleware error: jwt expired
+2025-11-11T10:17:25: ::1 - - [11/Nov/2025:07:17:25 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:17:39: ::1 - - [11/Nov/2025:07:17:39 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:18:10: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:18:10: ::1 - - [11/Nov/2025:07:18:10 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:18:29: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:18:29: ::1 - - [11/Nov/2025:07:18:29 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:19:09: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:19:09: ::1 - - [11/Nov/2025:07:19:09 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:19:45: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T10:19:45: ✅ DB Successfully connected
+2025-11-11T10:20:15: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:20:15: ::1 - - [11/Nov/2025:07:20:15 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:20:44: ::1 - - [11/Nov/2025:07:20:44 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:20:46: ::1 - - [11/Nov/2025:07:20:46 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:20:47: ::1 - - [11/Nov/2025:07:20:47 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:20:48: ::1 - - [11/Nov/2025:07:20:48 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:20:59: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:20:59: ::1 - - [11/Nov/2025:07:20:59 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:21:53: ::1 - - [11/Nov/2025:07:21:53 +0000] "GET /api/services/me HTTP/1.1" 404 29 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:21:57: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T10:21:57: ✅ DB Successfully connected
+2025-11-11T10:22:20: ::1 - - [11/Nov/2025:07:22:20 +0000] "POST /api/auth/signout HTTP/1.1" 200 39 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:22:40: ::1 - - [11/Nov/2025:07:22:40 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T10:22:53: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T10:22:53: ::1 - - [11/Nov/2025:07:22:53 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-11T16:25:20: ::1 - - [11/Nov/2025:13:25:20 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-11T16:35:05: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T16:35:05: ✅ DB Successfully connected
+2025-11-11T16:37:48: ::1 - - [11/Nov/2025:13:37:48 +0000] "POST /api/services HTTP/1.1" 401 40 "-" "curl/8.14.1"
+2025-11-11T16:38:28: ::1 - - [11/Nov/2025:13:38:28 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "curl/8.14.1"
+2025-11-11T16:38:50: ::1 - - [11/Nov/2025:13:38:50 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "curl/8.14.1"
+2025-11-11T16:39:10: ::1 - - [11/Nov/2025:13:39:10 +0000] "POST /api/auth/signin HTTP/1.1" 401 31 "-" "curl/8.14.1"
+2025-11-11T16:40:49: ::1 - - [11/Nov/2025:13:40:49 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "curl/8.14.1"
+2025-11-11T16:41:10: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:41:10: ::1 - - [11/Nov/2025:13:41:10 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "curl/8.14.1"
+2025-11-11T16:43:03: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T16:43:03: ✅ DB Successfully connected
+2025-11-11T16:43:26: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:43:26: ::1 - - [11/Nov/2025:13:43:26 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "curl/8.14.1"
+2025-11-11T16:43:56: ::1 - - [11/Nov/2025:13:43:56 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "curl/8.14.1"
+2025-11-11T16:44:37: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:44:37: ::1 - - [11/Nov/2025:13:44:37 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "curl/8.14.1"
+2025-11-11T16:45:42: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T16:45:42: ✅ DB Successfully connected
+2025-11-11T16:46:06: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:46:06: ::1 - - [11/Nov/2025:13:46:06 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "curl/8.14.1"
+2025-11-11T16:47:45: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T16:47:45: ✅ DB Successfully connected
+2025-11-11T16:48:13: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:48:13: ::1 - - [11/Nov/2025:13:48:13 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "curl/8.14.1"
+2025-11-11T16:49:19: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-11T16:49:19: ✅ DB Successfully connected
+2025-11-11T16:49:43: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-11T16:49:43: ::1 - - [11/Nov/2025:13:49:43 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "curl/8.14.1"
+2025-11-11T16:51:08: ::1 - - [11/Nov/2025:13:51:08 +0000] "POST /api/auth/signin HTTP/1.1" 401 31 "-" "curl/8.14.1"
+2025-11-11T16:51:52: ::1 - - [11/Nov/2025:13:51:52 +0000] "POST /api/auth/signin HTTP/1.1" 401 31 "-" "curl/8.14.1"
+2025-11-11T16:52:59: ::1 - - [11/Nov/2025:13:52:59 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "curl/8.14.1"
+2025-11-11T16:53:20: ::1 - - [11/Nov/2025:13:53:20 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "-" "curl/8.14.1"
+2025-11-11T16:56:30: ::1 - - [11/Nov/2025:13:56:30 +0000] "POST /api/auth/signin HTTP/1.1" 401 31 "-" "curl/8.14.1"
+2025-11-11T16:57:02: Auth middleware error: jwt expired
+2025-11-11T16:57:02: ::1 - - [11/Nov/2025:13:57:02 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "curl/8.14.1"
+2025-11-11T16:57:26: ::1 - - [11/Nov/2025:13:57:26 +0000] "POST /api/services HTTP/1.1" 401 40 "-" "curl/8.14.1"
+2025-11-11T16:57:48: ::1 - - [11/Nov/2025:13:57:48 +0000] "GET /api/services HTTP/1.1" 200 70 "-" "curl/8.14.1"
+2025-11-12T09:10:47: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-12T09:10:47: ✅ DB Successfully connected
+2025-11-12T09:11:48: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-12T09:11:48: ✅ DB Successfully connected
+2025-11-12T09:25:46: ::1 - - [12/Nov/2025:06:25:46 +0000] "GET /api/services HTTP/1.1" 200 70 "http://localhost:5000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T09:28:48: ::1 - - [12/Nov/2025:06:28:48 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-12T09:36:04: ::1 - - [12/Nov/2025:06:36:04 +0000] "GET /api/auth/signin HTTP/1.1" 404 68 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T09:36:04: ::1 - - [12/Nov/2025:06:36:04 +0000] "GET /favicon.ico HTTP/1.1" 404 64 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:02:43: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-12T10:02:43: ✅ DB Successfully connected
+2025-11-12T10:02:46: ::1 - - [12/Nov/2025:07:02:46 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:03:03: ::1 - - [12/Nov/2025:07:03:03 +0000] "GET /api/services HTTP/1.1" 200 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:36: ::1 - - [12/Nov/2025:07:04:36 +0000] "GET /api/services HTTP/1.1" 200 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:53: ::1 - - [12/Nov/2025:07:04:53 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/stats/users HTTP/1.1" 404 68 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/stats/orders HTTP/1.1" 404 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/stats/users HTTP/1.1" 404 68 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/stats/orders HTTP/1.1" 404 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:04:54: ::1 - - [12/Nov/2025:07:04:54 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/stats/users HTTP/1.1" 404 68 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/stats/orders HTTP/1.1" 404 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/stats/users HTTP/1.1" 404 68 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/stats/orders HTTP/1.1" 404 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:07:29: ::1 - - [12/Nov/2025:07:07:29 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/stats/users HTTP/1.1" 404 68 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/stats/orders HTTP/1.1" 404 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/stats/users HTTP/1.1" 404 68 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/stats/orders HTTP/1.1" 404 69 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/stats/services HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:08:20: ::1 - - [12/Nov/2025:07:08:20 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:34: ::1 - - [12/Nov/2025:07:11:34 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:51: ::1 - - [12/Nov/2025:07:11:51 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:11:51: ::1 - - [12/Nov/2025:07:11:51 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:07: ::1 - - [12/Nov/2025:07:12:07 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:12:33: Auth middleware error: jwt expired
+2025-11-12T10:12:33: ::1 - - [12/Nov/2025:07:12:33 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:13:53: Auth middleware error: jwt expired
+2025-11-12T10:13:53: ::1 - - [12/Nov/2025:07:13:53 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:13:56: Auth middleware error: jwt expired
+2025-11-12T10:13:56: ::1 - - [12/Nov/2025:07:13:56 +0000] "POST /api/services HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:14:01: ::1 - - [12/Nov/2025:07:14:01 +0000] "POST /api/auth/signout HTTP/1.1" 200 39 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:14:06: ::1 - - [12/Nov/2025:07:14:06 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:14:17: Params before execution: [
+  'new-cleaning-service',
+  'New Cleaning Service',
+  'Professional cleaning services',
+  'cleaning',
+  150,
+  'green',
+  'green-100',
+  '#10B981',
+  'https://ik.imagekit.io/zdwzhygxj/6.png?updatedAt=1751974874389',
+  '[{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]',
+  undefined,
+  'New Owner',
+  -1.2864,
+  36.8172
+]
+2025-11-12T10:14:17: Fields: [
+  { name: 'name', label: 'Full Name', type: 'text', required: true },
+  {
+    name: 'email',
+    label: 'Email Address',
+    type: 'text',
+    required: true
+  },
+  { name: 'phone', label: 'Phone', type: 'number', required: true },
+  { name: 'location', label: 'Location', type: 'text', required: true }
+]
+2025-11-12T10:14:17: Fields stringified: [{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]
+2025-11-12T10:14:17: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:189:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-12T10:14:17: ::1 - - [12/Nov/2025:07:14:17 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:16:02: Params before execution: [
+  'new-cleaning-service',
+  'New Cleaning Service',
+  'Professional cleaning services',
+  'cleaning',
+  150,
+  'green',
+  'green-100',
+  '#10B981',
+  'https://ik.imagekit.io/zdwzhygxj/6.png?updatedAt=1751974874389',
+  '[{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]',
+  undefined,
+  'New Owner',
+  -1.2864,
+  36.8172
+]
+2025-11-12T10:16:02: Fields: [
+  { name: 'name', label: 'Full Name', type: 'text', required: true },
+  {
+    name: 'email',
+    label: 'Email Address',
+    type: 'text',
+    required: true
+  },
+  { name: 'phone', label: 'Phone', type: 'number', required: true },
+  { name: 'location', label: 'Location', type: 'text', required: true }
+]
+2025-11-12T10:16:02: Fields stringified: [{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]
+2025-11-12T10:16:02: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:189:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-12T10:16:02: ::1 - - [12/Nov/2025:07:16:02 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:16:06: Params before execution: [
+  'new-cleaning-service',
+  'New Cleaning Service',
+  'Professional cleaning services',
+  'cleaning',
+  150,
+  'green',
+  'green-100',
+  '#10B981',
+  'https://ik.imagekit.io/zdwzhygxj/6.png?updatedAt=1751974874389',
+  '[{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]',
+  undefined,
+  'New Owner',
+  -1.2864,
+  36.8172
+]
+2025-11-12T10:16:06: Fields: [
+  { name: 'name', label: 'Full Name', type: 'text', required: true },
+  {
+    name: 'email',
+    label: 'Email Address',
+    type: 'text',
+    required: true
+  },
+  { name: 'phone', label: 'Phone', type: 'number', required: true },
+  { name: 'location', label: 'Location', type: 'text', required: true }
+]
+2025-11-12T10:16:06: Fields stringified: [{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]
+2025-11-12T10:16:06: Create service error: Error: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+    at PromisePool.execute (C:\PROJECTS\BE\node_modules\.pnpm\mysql2@3.15.3\node_modules\mysql2\lib\promise\pool.js:54:22)
+    at C:\PROJECTS\BE\src\routes\services.ts:189:35
+    at processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  code: undefined,
+  errno: undefined,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+2025-11-12T10:16:06: ::1 - - [12/Nov/2025:07:16:06 +0000] "POST /api/services HTTP/1.1" 500 33 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:19:27: 🚀 HudumaHub server listening on port:4000 (env=production)
+2025-11-12T10:19:27: ✅ DB Successfully connected
+2025-11-12T10:19:40: Params before execution: [
+  'new-cleaning-service',
+  'New Cleaning Service',
+  'Professional cleaning services',
+  'cleaning',
+  150,
+  'green',
+  'green-100',
+  '#10B981',
+  'https://ik.imagekit.io/zdwzhygxj/6.png?updatedAt=1751974874389',
+  '[{"name":"name","label":"Full Name","type":"text","required":true},{"name":"email","label":"Email Address","type":"text","required":true},{"name":"phone","label":"Phone","type":"number","required":true},{"name":"location","label":"Location","type":"text","required":true}]',
+  '29affa27-70bb-4f01-92c9-d8e1bd44ff41',
+  'New Owner',
+  -1.2864,
+  36.8172
+]
+2025-11-12T10:19:40: ::1 - - [12/Nov/2025:07:19:40 +0000] "POST /api/services HTTP/1.1" 201 779 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/services HTTP/1.1" 200 832 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:19:49: ::1 - - [12/Nov/2025:07:19:49 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:20:04: ::1 - - [12/Nov/2025:07:20:04 +0000] "GET /api/services HTTP/1.1" 200 832 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:20:31: ::1 - - [12/Nov/2025:07:20:31 +0000] "GET /api/services/new-cleaning-service HTTP/1.1" 200 774 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:21:55: ::1 - - [12/Nov/2025:07:21:55 +0000] "GET /api/services/me HTTP/1.1" 404 29 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:22:22: ::1 - - [12/Nov/2025:07:22:22 +0000] "GET /api/services/new-owner HTTP/1.1" 404 29 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:22:29: ::1 - - [12/Nov/2025:07:22:29 +0000] "GET /api/services/me HTTP/1.1" 404 29 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:23:14: Auth middleware error: jwt expired
+2025-11-12T10:23:14: ::1 - - [12/Nov/2025:07:23:14 +0000] "DELETE /api/services/new-cleaning-service HTTP/1.1" 401 36 "-" "PostmanRuntime/7.50.0"
+2025-11-12T10:24:09: ::1 - - [12/Nov/2025:07:24:09 +0000] "POST /api/auth/signout HTTP/1.1" 400 33 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:29: ::1 - - [12/Nov/2025:07:24:29 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:36: ::1 - - [12/Nov/2025:07:24:36 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:36: ::1 - - [12/Nov/2025:07:24:36 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:24:41: ::1 - - [12/Nov/2025:07:24:41 +0000] "PUT /api/services/1 HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "POST /api/auth/signin HTTP/1.1" 200 873 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/users HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/orders HTTP/1.1" 401 24 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/revenue/total HTTP/1.1" 404 70 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:01: ::1 - - [12/Nov/2025:07:25:01 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:06: ::1 - - [12/Nov/2025:07:25:06 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:25:06: ::1 - - [12/Nov/2025:07:25:06 +0000] "GET /api/services HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+2025-11-12T10:26:35: ::1 - - [12/Nov/2025:07:26:35 +0000] "PUT /api/services/1 HTTP/1.1" 401 40 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
+Error: bind EADDRINUSE null:4000
+    at listenOnPrimaryHandle (node:net:2018:18)
+    at shared (node:internal/cluster/child:157:3)
+    at Worker.<anonymous> (node:internal/cluster/child:110:7)
+    at process.onInternalMessage (node:internal/cluster/utils:49:5)
+    at process.emit (node:events:519:35)
+    at process.emit (C:\Users\בנימין\AppData\Local\pnpm\global\5\.pnpm\source-map-support@0.5.21\node_modules\source-map-support\source-map-support.js:516:21)
+    at emit (node:internal/child_process:949:14)
+    at processTicksAndRejections (node:internal/process/task_queues:91:21)
