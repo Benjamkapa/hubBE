@@ -17,7 +17,7 @@ async function requireAuth(req, res, next) {
         const decoded = (0, jwt_1.verifyToken)(token);
         // optionally validate decoded payload shape
         req.user = {
-            userId: decoded.id,
+            user_id: decoded.id,
             email: decoded.email,
             role: decoded.role,
         };

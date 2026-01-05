@@ -320,6 +320,8 @@ describe("Services API Endpoints", () => {
         { category: "cleaning" },
         { category: "shopping" },
         { category: "transport" },
+        { category: "beauty" },
+        
       ];
 
       pool.execute.mockResolvedValueOnce([mockCategories]);

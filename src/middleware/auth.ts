@@ -26,7 +26,7 @@ export async function requireAuth(
     const decoded = verifyToken(token) as any;
     // optionally validate decoded payload shape
     req.user = {
-      userId: decoded.id,
+      user_id: decoded.id,
       email: decoded.email,
       role: decoded.role,
     };

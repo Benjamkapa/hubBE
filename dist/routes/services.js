@@ -50,9 +50,9 @@ const optionalAuth = (req, _res, next) => {
     const token = parts[1];
     try {
         const decodedAny = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET || "please_change_this");
-        // Normalize token shape: ensure req.user.userId and req.user.role exist
+        // Normalize token shape: ensure req.user.user_id and req.user.role exist
         req.user = {
-            userId: decodedAny.userId ?? decodedAny.id ?? decodedAny.sub,
+            user_id: decodedAny.user_id ?? decodedAny.id ?? decodedAny.sub,
             role: decodedAny.role ?? decodedAny.userRole ?? decodedAny.roleName,
         };
         console.log("optionalAuth decoded user:", req.user);
@@ -62,23 +62,15 @@ const optionalAuth = (req, _res, next) => {
     }
     next();
 };
-// Public listing with pagination and filtering
+// List services with pagination and filtering
 router.get("/", optionalAuth, async (req, res) => {
-    // { changed code }
     try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 10;
         const category = req.query.category;
-        let owner_id = req.query.owner_id;
+        const owner_id = req.query.owner_id; // Keep as query param
         const owner_name = req.query.owner_name;
         const status = req.query.status;
-        // If caller is an authenticated service_provider, force owner_id to their id
-        const reqUser = req.user;
-        if (reqUser && reqUser.role === "service_provider") {
-            // coerce to DB type (string) and log for debugging
-            owner_id = String(reqUser.userId);
-            console.log("Enforcing owner_id filter for service_provider:", owner_id);
-        }
         // Basic validation
         if (page < 1 || limit < 1) {
             return res.status(400).json({ error: "Invalid pagination parameters" });
@@ -92,6 +84,7 @@ router.get("/", optionalAuth, async (req, res) => {
             params.push(category);
         }
         if (owner_id) {
+            // Only filter if explicitly provided in query
             whereConditions.push("owner_id = ?");
             params.push(owner_id);
         }
@@ -136,7 +129,7 @@ router.get("/:slug", optionalAuth, async (req, res) => {
         const reqUser = req.user;
         if (reqUser &&
             reqUser.role === "service_provider" &&
-            service.owner_id !== reqUser.userId) {
+            service.owner_id !== reqUser.user_id) {
             return res.status(403).json({ error: "Forbidden" });
         }
         res.json({ service });
@@ -169,13 +162,28 @@ router.post("/", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"
         "legal",
         "travel",
         "entertainment",
+        "beauty",
         "other",
     ]),
     (0, express_validator_1.body)("delivery_fee").optional().isFloat({ min: 0 }),
     (0, express_validator_1.body)("color").optional().isLength({ min: 1 }),
     (0, express_validator_1.body)("bg_color").optional().isLength({ min: 1 }),
     (0, express_validator_1.body)("color_hex").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("fields").optional().isArray(),
+    (0, express_validator_1.body)("fields")
+        .optional()
+        .custom((value) => {
+        if (!value)
+            return true; // Allow empty
+        try {
+            const parsed = JSON.parse(value);
+            if (Array.isArray(parsed))
+                return true;
+            throw new Error("Fields must be a valid JSON array");
+        }
+        catch (e) {
+            throw new Error("Fields must be a valid JSON array");
+        }
+    }),
     (0, express_validator_1.body)("owner_name").isLength({ min: 1 }),
     (0, express_validator_1.body)("latitude").optional().isFloat({ min: -90, max: 90 }),
     (0, express_validator_1.body)("longitude").optional().isFloat({ min: -180, max: 180 }),
@@ -191,7 +199,7 @@ router.post("/", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"
         if (!req.user) {
             return res.status(401).json({ error: "Unauthorized" });
         }
-        const ownerId = req.user.userId;
+        const ownerId = req.user.user_id;
         // FIX: Validate ownerId is not undefined
         if (!ownerId) {
             console.error("ownerId is undefined. req.user:", req.user);
@@ -290,6 +298,7 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
         "finance",
         "legal",
         "travel",
+        "beauty",
         "entertainment",
         "other",
     ]),
@@ -298,7 +307,21 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
     (0, express_validator_1.body)("bg_color").optional().isLength({ min: 1 }),
     (0, express_validator_1.body)("color_hex").optional().isLength({ min: 1 }),
     (0, express_validator_1.body)("image").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("fields").optional().isArray(),
+    (0, express_validator_1.body)("fields")
+        .optional()
+        .custom((value) => {
+        if (!value)
+            return true; // Allow empty
+        try {
+            const parsed = JSON.parse(value);
+            if (Array.isArray(parsed))
+                return true;
+            throw new Error("Fields must be a valid JSON array");
+        }
+        catch (e) {
+            throw new Error("Fields must be a valid JSON array");
+        }
+    }),
     (0, express_validator_1.body)("owner_name").optional().isLength({ min: 1 }),
     (0, express_validator_1.body)("latitude").optional().isFloat({ min: -90, max: 90 }),
     (0, express_validator_1.body)("longitude").optional().isFloat({ min: -180, max: 180 }),
@@ -311,7 +334,7 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
     try {
         const { id } = req.params;
         const { title, description, category, delivery_fee, color, bg_color, color_hex, image, fields, owner_name, latitude, longitude, status, } = req.body;
-        const userId = req.user.userId;
+        const user_id = req.user.user_id;
         const userRole = req.user.role;
         // Check ownership
         const [serviceRows] = await db_1.pool.execute("SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
@@ -319,7 +342,8 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
             return res.status(404).json({ error: "Service not found" });
         }
         const service = serviceRows[0];
-        if (userRole !== "admin" && service.owner_id !== userId) {
+        console.log(`Update service check: user_id=${user_id}, userRole=${userRole}, service.owner_id=${service.owner_id}`);
+        if (userRole !== "admin" && service.owner_id !== user_id) {
             return res.status(403).json({ error: "Forbidden" });
         }
         // Build update query
@@ -402,7 +426,7 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
 router.delete("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), async (req, res) => {
     try {
         const { id } = req.params;
-        const userId = req.user.userId;
+        const user_id = req.user.user_id;
         const userRole = req.user.role;
         // Check ownership
         const [serviceRows] = await db_1.pool.execute("SELECT owner_id FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
@@ -410,7 +434,7 @@ router.delete("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_prov
             return res.status(404).json({ error: "Service not found" });
         }
         const service = serviceRows[0];
-        if (userRole !== "admin" && service.owner_id !== userId) {
+        if (userRole !== "admin" && service.owner_id !== user_id) {
             return res.status(403).json({ error: "Forbidden" });
         }
         // Check for existing orders
@@ -428,21 +452,22 @@ router.delete("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_prov
         res.status(500).json({ error: "Internal server error" });
     }
 });
-// Get services by owner ID - service provider (own) or admin (any)
-router.get("/owner/:owner_id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), async (req, res) => {
+// List services by owner with pagination and filtering
+router.get("/owner/:owner_id", auth_1.requireAuth, async (req, res) => {
     try {
         const { owner_id } = req.params;
-        const userId = req.user.userId;
+        const user_id = req.user.user_id;
         const userRole = req.user.role;
-        // Check permissions: service_provider can only query their own, admin can query any
-        if (userRole !== "admin" && owner_id !== String(userId)) {
-            return res.status(403).json({ error: "Forbidden" });
+        // Permission check
+        if (userRole === "service_provider" && owner_id !== String(user_id)) {
+            return res
+                .status(403)
+                .json({ error: "Forbidden: Cannot access other users' services" });
         }
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 10;
         const category = req.query.category;
         const status = req.query.status;
-        // Basic validation
         if (page < 1 || limit < 1) {
             return res.status(400).json({ error: "Invalid pagination parameters" });
         }
@@ -459,16 +484,22 @@ router.get("/owner/:owner_id", auth_1.requireAuth, (0, roles_1.requireRole)("ser
             params.push(status);
         }
         const whereClause = whereConditions.join(" AND ");
-        const [rows] = await db_1.pool.query(`SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at FROM services WHERE ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`, [...params, limit, offset]);
+        // Fetch services with pagination
+        const [rows] = await db_1.pool.query(`SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at 
+         FROM services 
+         WHERE ${whereClause} 
+         ORDER BY created_at DESC 
+         LIMIT ? OFFSET ?`, [...params, limit, offset]);
+        // Get total count for pagination
         const [countRows] = await db_1.pool.query(`SELECT COUNT(*) as total FROM services WHERE ${whereClause}`, params);
         const total = countRows[0].total;
         res.json({
             services: rows,
             pagination: {
-                page: Number(page),
-                limit: Number(limit),
+                page,
+                limit,
                 total,
-                pages: Math.ceil(total / Number(limit)),
+                pages: Math.ceil(total / limit),
             },
         });
     }

@@ -119,31 +119,45 @@ router.post("/", auth_1.requireAuth, rateLimit_1.globalLimiter, async (req, res)
         }
     }
 });
-// Get user's orders (authenticated users)
-router.get("/my", auth_1.requireAuth, rateLimit_1.globalLimiter, async (req, res) => {
+router.get("/my", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"), // ensure only service providers access
+rateLimit_1.globalLimiter, async (req, res) => {
     try {
-        const userId = req.user.userId;
-        console.log(`[ORDERS] Fetching orders for user ${userId}`);
+        const providerId = req.user.userId;
+        console.log(`[ORDERS] Fetching orders for service provider ${providerId}`);
+        // Fetch orders associated with provider's services
         const [rows] = await db_1.pool.execute(`
-      SELECT o.id, o.total_amount, o.status, o.payment_status, o.created_at,
-             oi.service_id, oi.quantity, oi.price,
-             s.title as service_title, s.slug as service_slug
-      FROM orders o
-      JOIN order_items oi ON o.id = oi.order_id
-      JOIN services s ON oi.service_id = s.id
-      WHERE o.user_id = ? AND o.deleted_at IS NULL
-      ORDER BY o.created_at DESC
-    `, [userId]);
-        console.log(`[ORDERS] Retrieved ${rows.length} orders for user ${userId}`);
+        SELECT o.id,
+               o.user_id,
+               o.anonymous_name,
+               o.anonymous_email,
+               o.anonymous_phone,
+               o.total_amount,
+               o.status,
+               o.payment_status,
+               o.created_at,
+               oi.service_id,
+               oi.quantity,
+               oi.price,
+               s.title AS service_title,
+               s.slug AS service_slug,
+               p.display_name AS user_name
+        FROM orders o
+        JOIN order_items oi ON o.id = oi.order_id
+        JOIN services s ON oi.service_id = s.id
+        LEFT JOIN profiles p ON o.user_id = p.id
+        WHERE s.owner_id = ? AND o.deleted_at IS NULL
+        ORDER BY o.created_at DESC
+        `, [providerId]);
+        console.log(`[ORDERS] Retrieved ${rows.length} orders for service provider ${providerId}`);
         res.json({ orders: rows });
     }
     catch (error) {
-        console.error(`[ORDERS] Get user orders error:`, error);
+        console.error(`[ORDERS] Get provider orders error:`, error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
 // Get all orders (admin or service_provider) - with pagination and filtering
-router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin", "service_provider"), rateLimit_1.globalLimiter, async (req, res) => {
+router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin"), rateLimit_1.globalLimiter, async (req, res) => {
     try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 10;
@@ -210,79 +224,82 @@ router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin", "service_p
         res.status(500).json({ error: "Internal server error" });
     }
 });
-// Get order by id - owner/provider/admin
-router.get("/:id", auth_1.requireAuth, rateLimit_1.globalLimiter, async (req, res) => {
+router.get("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"), // only service_provider
+rateLimit_1.globalLimiter, async (req, res) => {
     try {
-        const { id } = req.params;
-        const userId = req.user.userId;
-        const userRole = req.user.role;
-        console.log(`[ORDERS] Fetching order ${id} for user ${userId} (role: ${userRole})`);
-        let query = "";
-        let params = [];
-        if (userRole === "admin") {
-            query = `
-          SELECT o.id, o.user_id, o.anonymous_name, o.anonymous_email, o.anonymous_phone,
-                 o.total_amount, o.status, o.payment_status, o.created_at,
-                 oi.service_id, oi.quantity, oi.price,
-                 s.title as service_title, s.slug as service_slug,
-                 p.display_name as user_name
-          FROM orders o
-          LEFT JOIN order_items oi ON o.id = oi.order_id
-          LEFT JOIN services s ON oi.service_id = s.id
-          LEFT JOIN profiles p ON o.user_id = p.id
-          WHERE o.id = ? AND o.deleted_at IS NULL
-        `;
-            params = [id];
+        const providerId = req.user.userId;
+        // Pagination & filters
+        const page = parseInt(req.query.page, 10) || 1;
+        const limit = parseInt(req.query.limit, 10) || 10;
+        const offset = (page - 1) * limit;
+        const status = req.query.status;
+        const payment_status = req.query.payment_status;
+        if (page < 1 || limit < 1) {
+            return res.status(400).json({ error: "Invalid pagination parameters" });
         }
-        else if (userRole === "service_provider") {
-            // Provider can view an order only if any item in the order belongs to one of their services
-            query = `
-          SELECT o.id, o.user_id, o.anonymous_name, o.anonymous_email, o.anonymous_phone,
-                 o.total_amount, o.status, o.payment_status, o.created_at,
-                 oi.service_id, oi.quantity, oi.price,
-                 s.title as service_title, s.slug as service_slug,
-                 p.display_name as user_name
-          FROM orders o
-          LEFT JOIN order_items oi ON o.id = oi.order_id
-          LEFT JOIN services s ON oi.service_id = s.id
-          LEFT JOIN profiles p ON o.user_id = p.id
-          WHERE o.id = ? AND o.deleted_at IS NULL
-            AND EXISTS (
-              SELECT 1 FROM order_items oi2
-              JOIN services s2 ON oi2.service_id = s2.id
-              WHERE oi2.order_id = o.id AND s2.owner_id = ?
-            )
-        `;
-            params = [id, userId];
+        // Build WHERE conditions
+        const conditions = ["o.deleted_at IS NULL", "s.owner_id = ?"];
+        const params = [providerId];
+        if (status) {
+            conditions.push("o.status = ?");
+            params.push(status);
         }
-        else {
-            // Regular user: can see only their own orders
-            query = `
-          SELECT o.id, o.total_amount, o.status, o.payment_status, o.created_at,
-                 oi.service_id, oi.quantity, oi.price,
-                 s.title as service_title, s.slug as service_slug
-          FROM orders o
-          JOIN order_items oi ON o.id = oi.order_id
-          JOIN services s ON oi.service_id = s.id
-          WHERE o.id = ? AND o.user_id = ? AND o.deleted_at IS NULL
-        `;
-            params = [id, userId];
+        if (payment_status) {
+            conditions.push("o.payment_status = ?");
+            params.push(payment_status);
         }
-        const [rows] = await db_1.pool.query(query, params);
-        if (rows.length === 0) {
-            return res
-                .status(404)
-                .json({ error: "Order not found or access denied" });
-        }
-        res.json({ order: rows[0] });
+        const whereClause = conditions.join(" AND ");
+        // Count total matching orders
+        const [countRows] = await db_1.pool.query(`
+        SELECT COUNT(DISTINCT o.id) as total
+        FROM orders o
+        JOIN order_items oi ON o.id = oi.order_id
+        JOIN services s ON oi.service_id = s.id
+        WHERE ${whereClause}
+        `, params);
+        const total = countRows[0].total;
+        // Fetch paginated orders with details
+        const [rows] = await db_1.pool.query(`
+        SELECT o.id,
+               o.user_id,
+               o.anonymous_name,
+               o.anonymous_email,
+               o.anonymous_phone,
+               o.total_amount,
+               o.status,
+               o.payment_status,
+               o.created_at,
+               oi.service_id,
+               oi.quantity,
+               oi.price,
+               s.title AS service_title,
+               s.slug AS service_slug,
+               p.display_name AS user_name
+        FROM orders o
+        JOIN order_items oi ON o.id = oi.order_id
+        JOIN services s ON oi.service_id = s.id
+        LEFT JOIN profiles p ON o.user_id = p.id
+        WHERE ${whereClause}
+        ORDER BY o.created_at DESC
+        LIMIT ? OFFSET ?
+        `, [...params, limit, offset]);
+        res.json({
+            orders: rows,
+            pagination: {
+                page,
+                limit,
+                total,
+                pages: Math.ceil(total / limit),
+            },
+        });
     }
     catch (error) {
-        console.error(`[ORDERS] Get order error:`, error);
+        console.error("[ORDERS] Provider get orders error:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
-// Update order status (admin only)
-router.put("/:id/status", auth_1.requireAuth, (0, roles_1.requireRole)("admin"), rateLimit_1.globalLimiter, async (req, res) => {
+// Update order status (admin or service_provider)
+router.put("/:id/status", auth_1.requireAuth, (0, roles_1.requireRole)("admin", "service_provider"), rateLimit_1.globalLimiter, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = zod_1.z
@@ -314,8 +331,8 @@ router.put("/:id/status", auth_1.requireAuth, (0, roles_1.requireRole)("admin"),
         }
     }
 });
-// Update payment status (admin only)
-router.put("/:id/payment", auth_1.requireAuth, (0, roles_1.requireRole)("admin"), rateLimit_1.globalLimiter, async (req, res) => {
+// Update payment status (admin or service_provider)
+router.put("/:id/payment", auth_1.requireAuth, (0, roles_1.requireRole)("admin", "service_provider"), rateLimit_1.globalLimiter, async (req, res) => {
     try {
         const { id } = req.params;
         const { payment_status } = zod_1.z

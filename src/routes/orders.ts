@@ -122,7 +122,7 @@ router.post("/anonymous", anonymousOrderLimiter, async (req, res) => {
 router.post("/", requireAuth, globalLimiter, async (req: AuthRequest, res) => {
   try {
     const { serviceId, quantity } = authenticatedOrderSchema.parse(req.body);
-    const userId = req.user!.userId;
+    const userId = req.user!.user_id ?? req.user!.userId ?? req.user!.id;
 
     console.log(
       `[ORDERS] Authenticated order attempt: User ${userId} for service ${serviceId}`
@@ -182,39 +182,7 @@ router.post("/", requireAuth, globalLimiter, async (req: AuthRequest, res) => {
   }
 });
 
-// Get user's orders (authenticated users)
-router.get("/my", requireAuth, globalLimiter, async (req: AuthRequest, res) => {
-  try {
-    const userId = req.user!.userId;
-
-    console.log(`[ORDERS] Fetching orders for user ${userId}`);
-
-    const [rows] = await pool.execute(
-      `
-      SELECT o.id, o.total_amount, o.status, o.payment_status, o.created_at,
-             oi.service_id, oi.quantity, oi.price,
-             s.title as service_title, s.slug as service_slug
-      FROM orders o
-      JOIN order_items oi ON o.id = oi.order_id
-      JOIN services s ON oi.service_id = s.id
-      WHERE o.user_id = ? AND o.deleted_at IS NULL
-      ORDER BY o.created_at DESC
-    `,
-      [userId]
-    );
-
-    console.log(
-      `[ORDERS] Retrieved ${(rows as any[]).length} orders for user ${userId}`
-    );
-
-    res.json({ orders: rows });
-  } catch (error) {
-    console.error(`[ORDERS] Get user orders error:`, error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-// Get all orders (admin or service_provider) - with pagination and filtering
+// Admin & providers: get orders (providers see only their services' orders)
 router.get(
   "/",
   requireAuth,
@@ -228,11 +196,13 @@ router.get(
       const payment_status = req.query.payment_status as string;
       const offset = (page - 1) * limit;
 
+      const userRole = req.user!.role;
+      const userId = req.user!.user_id ?? req.user!.userId ?? req.user!.id;
+
       if (page < 1 || limit < 1) {
         return res.status(400).json({ error: "Invalid pagination parameters" });
       }
 
-      // Build base WHERE and params
       const conditions: string[] = ["o.deleted_at IS NULL"];
       const params: any[] = [];
 
@@ -245,31 +215,27 @@ router.get(
         params.push(payment_status);
       }
 
-      // If caller is service_provider, restrict to orders that include services owned by them
-      const userRole = req.user!.role;
-      const userId = req.user!.userId;
+      // If requester is a service provider, restrict to orders that include their services
       if (userRole === "service_provider") {
         conditions.push(
           `EXISTS (
-             SELECT 1 FROM order_items oi2
-             JOIN services s2 ON oi2.service_id = s2.id
-             WHERE oi2.order_id = o.id AND s2.owner_id = ?
-           )`
+            SELECT 1 FROM order_items oi2
+            JOIN services s2 ON oi2.service_id = s2.id
+            WHERE oi2.order_id = o.id AND s2.owner_id = ?
+          )`
         );
         params.push(userId);
       }
 
       const whereClause = conditions.join(" AND ");
 
-      // Count
       const [countRows] = await pool.query(
         `SELECT COUNT(*) as total FROM orders o WHERE ${whereClause}`,
         params
       );
       const total = (countRows as any[])[0].total;
 
-      // Main query - include joins for items; use same filter params then add pagination
-      const queryParams = [...params, Number(limit), offset];
+      const queryParams = [...params, limit, offset];
 
       const [rows] = await pool.query(
         `
@@ -292,10 +258,10 @@ router.get(
       res.json({
         orders: rows,
         pagination: {
-          page: Number(page),
-          limit: Number(limit),
+          page,
+          limit,
           total,
-          pages: Math.ceil(total / Number(limit)),
+          pages: Math.ceil(total / limit),
         },
       });
     } catch (error) {
@@ -305,15 +271,15 @@ router.get(
   }
 );
 
-// Get order by id - owner/provider/admin
+// Get single order - admin sees all, provider sees only if they own the service
 router.get(
   "/:id",
   requireAuth,
   globalLimiter,
-  async (req: AuthRequest, res) => {
+  async (req: AuthRequest, res: Response) => {
     try {
       const { id } = req.params;
-      const userId = req.user!.userId;
+      const userId = req.user!.user_id ?? req.user!.userId ?? req.user!.id;
       const userRole = req.user!.role;
 
       console.log(
@@ -338,7 +304,7 @@ router.get(
         `;
         params = [id];
       } else if (userRole === "service_provider") {
-        // Provider can view an order only if any item in the order belongs to one of their services
+        // Provider can view order only if one of their services is in it
         query = `
           SELECT o.id, o.user_id, o.anonymous_name, o.anonymous_email, o.anonymous_phone,
                  o.total_amount, o.status, o.payment_status, o.created_at,
@@ -387,11 +353,11 @@ router.get(
   }
 );
 
-// Update order status (admin only)
+// Update order status (admin or service_provider)
 router.put(
   "/:id/status",
   requireAuth,
-  requireRole("admin"),
+  requireRole("admin", "service_provider"),
   globalLimiter,
   async (req: AuthRequest, res) => {
     try {
@@ -431,11 +397,11 @@ router.put(
   }
 );
 
-// Update payment status (admin only)
+// Update payment status (admin or service_provider)
 router.put(
   "/:id/payment",
   requireAuth,
-  requireRole("admin"),
+  requireRole("admin", "service_provider"),
   globalLimiter,
   async (req: AuthRequest, res) => {
     try {

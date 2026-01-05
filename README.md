@@ -72,10 +72,10 @@ This creates an admin user with email `admin@hudumahub.com` and password `Change
 ### 4. Start Development Server
 
 ```bash
-pnpm run dev
+pnpm run dev 
 ```
 
-The server will start on `http://localhost:4000`.
+The server will start on `http://localhost:4000`. 
 
 ## API Endpoints
 

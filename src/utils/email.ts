@@ -130,7 +130,7 @@ export const sendEmailVerification = async (
   email: string,
   verificationToken: string
 ): Promise<void> => {
-  const backendUrl = process.env.BACKEND_URL || "http://localhost:4000";
+  const backendUrl = process.env.BACKEND_URL;
   const verificationUrl = `${backendUrl}/api/auth/verify-email`;
   const currentYear = new Date().getFullYear();
   const subject = "Verify Your HudumaHub Account";

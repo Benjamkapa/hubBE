@@ -122,7 +122,7 @@ const sendPasswordResetEmail = async (email, resetToken) => {
 };
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
 const sendEmailVerification = async (email, verificationToken) => {
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:4000";
+    const backendUrl = process.env.BACKEND_URL;
     const verificationUrl = `${backendUrl}/api/auth/verify-email`;
     const currentYear = new Date().getFullYear();
     const subject = "Verify Your HudumaHub Account";
