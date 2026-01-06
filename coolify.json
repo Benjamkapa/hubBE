@@ -1,0 +1,42 @@
+{
+  "$schema": "https://coolify.io/docs/coolify-json-schema.json",
+  "services": [
+    {
+      "name": "hudumahub-backend",
+      "type": "application",
+      "build": {
+        "pack": "nixpacks"
+      },
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Benjamkapa/hubBE.git",
+        "branch": "main"
+      },
+      "ports": [
+        {
+          "target": 4000,
+          "published": 4000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": {
+        "NODE_ENV": "production",
+        "PORT": "4000"
+      },
+      "volumes": [
+        {
+          "source": "uploads",
+          "target": "/app/uploads",
+          "type": "volume"
+        }
+      ],
+      "healthcheck": {
+        "enabled": true,
+        "path": "/api/health",
+        "interval": 30,
+        "timeout": 10,
+        "retries": 3
+      }
+    }
+  ]
+}
