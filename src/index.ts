@@ -122,7 +122,7 @@ app.get(
       res.json({ totalCount, activeCount });
     } catch (error) {
       console.error("Get service stats error:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: " Internal server error" });
     }
   }
 );
@@ -206,8 +206,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error("❌ Unhandled error:", err.stack || err.message || err);
   if (!res.headersSent) {
     res
-      .status(err.status || 500)
-      .json({ error: err.message || "Internal Server Error" });
+      .status(err.status)
+      .json({ error: err.message || "500 Internal Server Error" });
   }
 });
 
