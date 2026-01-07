@@ -526,7 +526,7 @@ router.get("/track/:id", globalLimiter, async (req, res) => {
       try {
         decoded = jwt.verify(
           token,
-          process.env.JWT_SECRET || "please_change_this"
+          process.env.JWT_SECRET || "please_change_this_one"
         );
       } catch (err) {
         return res.status(401).json({ error: "Invalid token" });
