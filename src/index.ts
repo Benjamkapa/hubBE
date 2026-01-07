@@ -170,6 +170,32 @@ app.post(
   }
 );
 
+// Setup DB route (development only - remove after first use)
+if (process.env.NODE_ENV !== "production") {
+  app.get("/api/setup-db", async (req: Request, res: Response) => {
+    try {
+      const fs = require("fs");
+      const path = require("path");
+
+      const migrationsDir = path.join(process.cwd(), "migrations");
+      const files = fs.readdirSync(migrationsDir).sort();
+
+      for (const file of files) {
+        if (file.endsWith(".sql")) {
+          const sql = fs.readFileSync(path.join(migrationsDir, file), "utf8");
+          await pool.execute(sql);
+          console.log(`✅ Executed migration: ${file}`);
+        }
+      }
+
+      res.json({ message: "Database setup complete", migrations: files });
+    } catch (error) {
+      console.error("Setup DB error:", error);
+      res.status(500).json({ error: "Database setup failed" });
+    }
+  });
+}
+
 // health
 app.get("/api/health", (req: Request, res: Response) => {
   res.json({

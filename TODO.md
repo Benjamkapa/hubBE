@@ -1,3 +1,27 @@
+# TODO: Railway Deployment Preparation
+
+## Completed Tasks
+
+- [x] Add /api/setup-db route for running migrations on Railway (development only)
+- [x] Verify package.json has build and start scripts
+- [x] Confirm server listens on process.env.PORT
+- [x] Confirm database config uses environment variables
+
+## Remaining Tasks
+
+- [ ] Fix Git secret issue (remove .env from commit history)
+- [ ] Push clean code to GitHub
+- [ ] Create Railway project and deploy
+- [ ] Run migrations via /api/setup-db route
+- [ ] Test deployed endpoints
+
+## Notes
+
+- Setup route is only available in non-production environments
+- Remove the setup route after first use for security
+
+---
+
 # TODO: Switch to Resend API-based Email
 
 ## Completed Tasks
