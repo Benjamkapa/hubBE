@@ -40,10 +40,6 @@ app.disable("x-powered-by");
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "http://localhost:3000", // React dev server
-  "http://localhost:4000", // Backend itself
-  "http://127.0.0.1:3000", // Alternative localhost
-  "http://127.0.0.1:4000", // Alternative localhost
 ].filter(Boolean) as string[];
 
 app.use(
