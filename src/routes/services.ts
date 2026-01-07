@@ -118,6 +118,18 @@ router.get(
         [...params, limit, offset]
       );
 
+      // Convert relative image paths to full URLs
+      const baseUrl =
+        process.env.BACKEND_URL ||
+        `http://localhost:${process.env.PORT || 4000}`;
+      const processedRows = (rows as any[]).map((service) => ({
+        ...service,
+        image:
+          service.image && service.image.startsWith("/uploads/")
+            ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+            : service.image,
+      }));
+
       const [countRows] = await pool.query(
         `SELECT COUNT(*) as total FROM services WHERE ${whereClause}`,
         params
@@ -125,7 +137,7 @@ router.get(
       const total = (countRows as any)[0].total;
 
       res.json({
-        services: rows,
+        services: processedRows,
         pagination: {
           page: Number(page),
           limit: Number(limit),
@@ -171,7 +183,19 @@ router.get("/:slug", optionalAuth, async (req: Request, res: Response) => {
       }
     }
 
-    res.json({ service });
+    // Convert relative image paths to full URLs
+    const baseUrl =
+      process.env.BACKEND_URL ||
+      `http://localhost:${process.env.PORT || 4000}`;
+    const processedService = {
+      ...service,
+      image:
+        service.image && service.image.startsWith("/uploads/")
+          ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+          : service.image,
+    };
+
+    res.json({ service: processedService });
   } catch (error) {
     console.error("Get service by slug error:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -349,7 +373,7 @@ router.get("/:slug", optionalAuth, async (req: Request, res: Response) => {
 // );
 
 router.post(
-  "/",
+  "/add-service",
   requireAuth,
   requireRole("service_provider", "admin"),
   upload.single("image"),
@@ -358,6 +382,7 @@ router.post(
     body("category").isIn([
       "shop",
       "cleaning",
+      "consulting",
       "shopping",
       "transport",
       "repair",
@@ -476,189 +501,6 @@ router.post(
     }
   }
 );
-
-// Update service - provider (owner) or admin
-// router.put(
-//   "/:id",
-//   requireAuth,
-//   requireRole("service_provider", "admin"),
-//   [
-//     body("title").optional().isLength({ min: 1 }),
-//     body("description").optional().isLength({ min: 1 }),
-//     body("category")
-//       .optional()
-//       .isIn([
-//         "shop",
-//         "cleaning",
-//         "shopping",
-//         "transport",
-//         "repair",
-//         "delivery",
-//         "tutoring",
-//         "health",
-//         "food",
-//         "events",
-//         "home",
-//         "education",
-//         "technology",
-//         "finance",
-//         "legal",
-//         "travel",
-//         "beauty",
-//         "entertainment",
-//         "other",
-//       ]),
-//     body("delivery_fee").optional().isFloat({ min: 0 }),
-//     body("color").optional().isLength({ min: 1 }),
-//     body("bg_color").optional().isLength({ min: 1 }),
-//     body("color_hex").optional().isLength({ min: 1 }),
-//     body("image").optional().isLength({ min: 1 }),
-//     body("fields")
-//       .optional()
-//       .custom((value) => {
-//         if (!value) return true; // Allow empty
-//         try {
-//           const parsed = JSON.parse(value);
-//           if (Array.isArray(parsed)) return true;
-//           throw new Error("Fields must be a valid JSON array");
-//         } catch (e) {
-//           throw new Error("Fields must be a valid JSON array");
-//         }
-//       }),
-//     body("owner_name").optional().isLength({ min: 1 }),
-//     body("latitude").optional().isFloat({ min: -90, max: 90 }),
-//     body("longitude").optional().isFloat({ min: -180, max: 180 }),
-//     body("status").optional().isIn(["active", "inactive"]),
-//   ],
-//   async (req: AuthRequest, res: Response) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() });
-//     }
-
-//     try {
-//       const { id } = req.params;
-//       const {
-//         title,
-//         description,
-//         category,
-//         delivery_fee,
-//         color,
-//         bg_color,
-//         color_hex,
-//         image,
-//         fields,
-//         owner_name,
-//         latitude,
-//         longitude,
-//         status,
-//       } = req.body;
-//       const user_id = req.user!.user_id;
-//       const userRole = req.user!.role;
-
-//       // Check ownership
-//       const [serviceRows] = await pool.execute(
-//         "SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL",
-//         [id]
-//       );
-//       if ((serviceRows as any[]).length === 0) {
-//         return res.status(404).json({ error: "Service not found" });
-//       }
-//       const service = (serviceRows as any[])[0];
-//       console.log(
-//         `Update service check: user_id=${user_id}, userRole=${userRole}, service.owner_id=${service.owner_id}`
-//       );
-//       if (userRole !== "admin" && service.owner_id !== user_id) {
-//         return res.status(403).json({ error: "Forbidden" });
-//       }
-
-//       // Build update query
-//       const updates: string[] = [];
-//       const params: any[] = [];
-//       if (title !== undefined) {
-//         updates.push("title = ?");
-//         params.push(title);
-//         // Regenerate slug if title changed
-//         const newSlug = title
-//           .toLowerCase()
-//           .replace(/[^a-z0-9]+/g, "-")
-//           .replace(/^-+|-+$/g, "");
-//         updates.push("slug = ?");
-//         params.push(newSlug);
-//       }
-//       if (description !== undefined) {
-//         updates.push("description = ?");
-//         params.push(description);
-//       }
-//       if (category !== undefined) {
-//         updates.push("category = ?");
-//         params.push(category);
-//       }
-//       if (delivery_fee !== undefined) {
-//         updates.push("delivery_fee = ?");
-//         params.push(delivery_fee);
-//       }
-//       if (color !== undefined) {
-//         updates.push("color = ?");
-//         params.push(color);
-//       }
-//       if (bg_color !== undefined) {
-//         updates.push("bg_color = ?");
-//         params.push(bg_color);
-//       }
-//       if (color_hex !== undefined) {
-//         updates.push("color_hex = ?");
-//         params.push(color_hex);
-//       }
-//       if (image !== undefined) {
-//         updates.push("image = ?");
-//         params.push(image);
-//       }
-//       if (fields !== undefined) {
-//         updates.push("fields = ?");
-//         params.push(JSON.stringify(fields));
-//       }
-//       if (owner_name !== undefined) {
-//         updates.push("owner_name = ?");
-//         params.push(owner_name);
-//       }
-//       if (latitude !== undefined) {
-//         updates.push("latitude = ?");
-//         params.push(latitude);
-//       }
-//       if (longitude !== undefined) {
-//         updates.push("longitude = ?");
-//         params.push(longitude);
-//       }
-//       if (status !== undefined) {
-//         updates.push("status = ?");
-//         params.push(status);
-//       }
-//       if (updates.length === 0) {
-//         return res.status(400).json({ error: "No fields to update" });
-//       }
-
-//       params.push(id);
-//       await pool.execute(
-//         `UPDATE services SET ${updates.join(
-//           ", "
-//         )}, updated_at = NOW() WHERE id = ?`,
-//         params
-//       );
-
-//       // Get updated service
-//       const [updatedRows] = await pool.execute(
-//         "SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at, updated_at FROM services WHERE id = ?",
-//         [id]
-//       );
-
-//       res.json({ service: (updatedRows as any[])[0] });
-//     } catch (error) {
-//       console.error("Update service error:", error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   }
-// );
 
 router.put(
   "/:id",
@@ -896,13 +738,25 @@ router.get(
 
       // Fetch services with pagination
       const [rows] = await pool.query(
-        `SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at 
-         FROM services 
-         WHERE ${whereClause} 
-         ORDER BY created_at DESC 
+        `SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at
+         FROM services
+         WHERE ${whereClause}
+         ORDER BY created_at DESC
          LIMIT ? OFFSET ?`,
         [...params, limit, offset]
       );
+
+      // Convert relative image paths to full URLs
+      const baseUrl =
+        process.env.BACKEND_URL ||
+        `http://localhost:${process.env.PORT || 4000}`;
+      const processedRows = (rows as any[]).map((service) => ({
+        ...service,
+        image:
+          service.image && service.image.startsWith("/uploads/")
+            ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+            : service.image,
+      }));
 
       // Get total count for pagination
       const [countRows] = await pool.query(
@@ -912,7 +766,7 @@ router.get(
       const total = (countRows as any)[0].total;
 
       res.json({
-        services: rows,
+        services: processedRows,
         pagination: {
           page,
           limit,

@@ -489,38 +489,10 @@ router.get("/track/:id", globalLimiter, async (req, res) => {
       });
     }
 
-    // If not anonymous, check if user is authenticated and owns the order
-    const authHeader = (req.headers as any).authorization;
-    if (!authHeader) {
-      return res
-        .status(401)
-        .json({ error: "Authentication required for user orders" });
-    }
-
-    // Parse token to get user info
-    const jwt = require("jsonwebtoken");
-    const parts = authHeader.split(" ");
-    if (parts.length !== 2) {
-      return res.status(401).json({ error: "Invalid authorization header" });
-    }
-
-    const token = parts[1];
-    let decoded;
-    try {
-      decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET || "please_change_this"
-      );
-    } catch (err) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
-
-    const userId = decoded.userId ?? decoded.id ?? decoded.sub;
-
-    // Check if authenticated user owns this order
-    const [userRows] = await pool.query(
+    // Check if it's a user order (authenticated users only)
+    const [userOrderRows] = await pool.query(
       `
-      SELECT o.id, o.total_amount, o.status, o.payment_status, o.created_at,
+      SELECT o.id, o.user_id, o.total_amount, o.status, o.payment_status, o.created_at,
              oi.service_id, oi.quantity, oi.price,
              s.title as service_title, s.slug as service_slug, s.owner_name, s.image,
              p.display_name as user_name, p.phone as provider_phone, p.email as provider_email
@@ -528,42 +500,76 @@ router.get("/track/:id", globalLimiter, async (req, res) => {
       JOIN order_items oi ON o.id = oi.order_id
       JOIN services s ON oi.service_id = s.id
       LEFT JOIN profiles p ON s.owner_id = p.id
-      WHERE o.id = ? AND o.user_id = ? AND o.deleted_at IS NULL
+      WHERE o.id = ? AND o.user_id IS NOT NULL AND o.deleted_at IS NULL
     `,
-      [id, userId]
+      [id]
     );
 
-    if ((userRows as any[]).length === 0) {
-      return res
-        .status(404)
-        .json({ error: "Order not found or access denied" });
-    }
+    if ((userOrderRows as any[]).length > 0) {
+      // It's a user order - require authentication
+      const authHeader = (req.headers as any).authorization;
+      if (!authHeader) {
+        return res
+          .status(401)
+          .json({ error: "Authentication required for user orders" });
+      }
 
-    const order = (userRows as any[])[0];
-    res.json({
-      order: {
-        id: order.id,
-        customer: {
-          name: order.user_name,
-          userId: userId,
+      // Parse token to get user info
+      const jwt = require("jsonwebtoken");
+      const parts = authHeader.split(" ");
+      if (parts.length !== 2) {
+        return res.status(401).json({ error: "Invalid authorization header" });
+      }
+
+      const token = parts[1];
+      let decoded;
+      try {
+        decoded = jwt.verify(
+          token,
+          process.env.JWT_SECRET || "please_change_this"
+        );
+      } catch (err) {
+        return res.status(401).json({ error: "Invalid token" });
+      }
+
+      const userId = decoded.userId ?? decoded.id ?? decoded.sub;
+
+      // Check if authenticated user owns this order
+      const order = (userOrderRows as any[])[0];
+      if (order.user_id !== userId) {
+        return res
+          .status(403)
+          .json({ error: "Access denied: You can only view your own orders" });
+      }
+
+      res.json({
+        order: {
+          id: order.id,
+          customer: {
+            name: order.user_name,
+            userId: userId,
+          },
+          totalAmount: order.total_amount,
+          status: order.status,
+          payment_status: order.payment_status,
+          createdAt: order.created_at,
+          items: (userOrderRows as any[]).map((row: any) => ({
+            serviceId: row.service_id,
+            serviceTitle: row.service_title,
+            serviceSlug: row.service_slug,
+            serviceImage: row.image,
+            providerName: row.owner_name,
+            providerPhone: row.provider_phone,
+            providerEmail: row.provider_email,
+            quantity: row.quantity,
+            price: row.price,
+          })),
         },
-        totalAmount: order.total_amount,
-        status: order.status,
-        payment_status: order.payment_status,
-        createdAt: order.created_at,
-        items: (userRows as any[]).map((row: any) => ({
-          serviceId: row.service_id,
-          serviceTitle: row.service_title,
-          serviceSlug: row.service_slug,
-          serviceImage: row.image,
-          providerName: row.owner_name,
-          providerPhone: row.provider_phone,
-          providerEmail: row.provider_email,
-          quantity: row.quantity,
-          price: row.price,
-        })),
-      },
-    });
+      });
+    } else {
+      // Order not found at all
+      return res.status(404).json({ error: "Order not found" });
+    }
   } catch (error) {
     console.error(`[ORDERS] Track order error:`, error);
     res.status(500).json({ error: "Internal server error" });

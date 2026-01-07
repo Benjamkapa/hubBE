@@ -42,6 +42,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:3000", // React dev server
   "http://localhost:4000", // Backend itself
+  "http://127.0.0.1:3000", // Alternative localhost
+  "http://127.0.0.1:4000", // Alternative localhost
 ].filter(Boolean) as string[];
 
 app.use(
@@ -62,16 +64,31 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(
   "/uploads",
   (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Credentials", "true");
+    // Allow all origins for image access (more permissive for images)
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, OPTIONS");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, Accept, Origin, X-Requested-With"
-    );
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Cache-Control", "public, max-age=31536000"); // Cache for 1 year
+    // Override CORP to allow cross-origin access for images
+    res.header("Cross-Origin-Resource-Policy", "cross-origin");
     next();
   },
-  express.static(path.join(process.cwd(), "uploads"))
+  express.static(path.join(process.cwd(), "uploads"), {
+    setHeaders: (res, path) => {
+      // Set proper content type for images
+      if (path.endsWith(".jpg") || path.endsWith(".jpeg")) {
+        res.setHeader("Content-Type", "image/jpeg");
+      } else if (path.endsWith(".png")) {
+        res.setHeader("Content-Type", "image/png");
+      } else if (path.endsWith(".webp")) {
+        res.setHeader("Content-Type", "image/webp");
+      } else if (path.endsWith(".gif")) {
+        res.setHeader("Content-Type", "image/gif");
+      }
+      // Also set CORP for static file responses
+      res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+    },
+  })
 );
 
 // global rate limiter (applies to /api)

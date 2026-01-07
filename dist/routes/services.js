@@ -63,7 +63,11 @@ const optionalAuth = (req, _res, next) => {
     next();
 };
 // List services with pagination and filtering
-router.get("/", optionalAuth, async (req, res) => {
+router.get("/", 
+// requireAuth,
+// requireRole("admin", "service_provider"),
+// globalLimiter,
+async (req, res) => {
     try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 10;
@@ -98,10 +102,19 @@ router.get("/", optionalAuth, async (req, res) => {
         }
         const whereClause = whereConditions.join(" AND ");
         const [rows] = await db_1.pool.query(`SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at FROM services WHERE ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`, [...params, limit, offset]);
+        // Convert relative image paths to full URLs
+        const baseUrl = process.env.BACKEND_URL ||
+            `http://localhost:${process.env.PORT || 4000}`;
+        const processedRows = rows.map((service) => ({
+            ...service,
+            image: service.image && service.image.startsWith("/uploads/")
+                ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+                : service.image,
+        }));
         const [countRows] = await db_1.pool.query(`SELECT COUNT(*) as total FROM services WHERE ${whereClause}`, params);
         const total = countRows[0].total;
         res.json({
-            services: rows,
+            services: processedRows,
             pagination: {
                 page: Number(page),
                 limit: Number(limit),
@@ -127,12 +140,25 @@ router.get("/:slug", optionalAuth, async (req, res) => {
         const service = rows[0];
         // If requester is authenticated service_provider, ensure they own the service
         const reqUser = req.user;
-        if (reqUser &&
-            reqUser.role === "service_provider" &&
-            service.owner_id !== reqUser.user_id) {
-            return res.status(403).json({ error: "Forbidden" });
+        if (reqUser && reqUser.role === "service_provider") {
+            const ownerId = service.owner_id ?? null;
+            const requesterId = reqUser.user_id ?? reqUser.userId ?? reqUser.id ?? null;
+            if (ownerId === null ||
+                requesterId === null ||
+                String(ownerId) !== String(requesterId)) {
+                return res.status(403).json({ error: "Forbidden" });
+            }
         }
-        res.json({ service });
+        // Convert relative image paths to full URLs
+        const baseUrl = process.env.BACKEND_URL ||
+            `http://localhost:${process.env.PORT || 4000}`;
+        const processedService = {
+            ...service,
+            image: service.image && service.image.startsWith("/uploads/")
+                ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+                : service.image,
+        };
+        res.json({ service: processedService });
     }
     catch (error) {
         console.error("Get service by slug error:", error);
@@ -140,13 +166,168 @@ router.get("/:slug", optionalAuth, async (req, res) => {
     }
 });
 // Create service - service provider or admin
-router.post("/", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), upload.single("image"), // Handle file upload
-[
-    (0, express_validator_1.body)("title").isLength({ min: 1 }),
-    (0, express_validator_1.body)("description").optional().isLength({ min: 1 }),
+// router.post(
+//   "/",
+//   requireAuth,
+//   requireRole("service_provider", "admin"),
+//   upload.single("image"), // Handle file upload
+//   [
+//     body("title").isLength({ min: 1 }),
+//     body("description").optional().isLength({ min: 1 }),
+//     body("category").isIn([
+//       "shop",
+//       "cleaning",
+//       "shopping",
+//       "transport",
+//       "repair",
+//       "delivery",
+//       "tutoring",
+//       "health",
+//       "food",
+//       "events",
+//       "home",
+//       "education",
+//       "technology",
+//       "finance",
+//       "legal",
+//       "travel",
+//       "entertainment",
+//       "beauty",
+//       "other",
+//     ]),
+//     body("delivery_fee").optional().isFloat({ min: 0 }),
+//     body("color").optional().isLength({ min: 1 }),
+//     body("bg_color").optional().isLength({ min: 1 }),
+//     body("color_hex").optional().isLength({ min: 1 }),
+//     body("fields")
+//       .optional()
+//       .custom((value) => {
+//         if (!value) return true; // Allow empty
+//         try {
+//           const parsed = JSON.parse(value);
+//           if (Array.isArray(parsed)) return true;
+//           throw new Error("Fields must be a valid JSON array");
+//         } catch (e) {
+//           throw new Error("Fields must be a valid JSON array");
+//         }
+//       }),
+//     body("owner_name").isLength({ min: 1 }),
+//     body("latitude").optional().isFloat({ min: -90, max: 90 }),
+//     body("longitude").optional().isFloat({ min: -180, max: 180 }),
+//     body("status").optional().isIn(["active", "inactive"]),
+//   ],
+//   async (req: AuthRequest, res: Response) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     try {
+//       const {
+//         title,
+//         description,
+//         category,
+//         delivery_fee,
+//         color,
+//         bg_color,
+//         color_hex,
+//         fields,
+//         owner_name,
+//         latitude,
+//         longitude,
+//         status,
+//       } = req.body;
+//       // FIX: Check if user exists first
+//       if (!req.user) {
+//         return res.status(401).json({ error: "Unauthorized" });
+//       }
+//       const ownerId = req.user.user_id;
+//       // FIX: Validate ownerId is not undefined
+//       if (!ownerId) {
+//         console.error("ownerId is undefined. req.user:", req.user);
+//         return res.status(400).json({ error: "Invalid user ID" });
+//       }
+//       // Handle image upload
+//       let imagePath = null;
+//       if (req.file) {
+//         imagePath = `/uploads/${req.file.filename}`;
+//       }
+//       // Ensure optional fields are null if not provided
+//       const safeDescription = description || null;
+//       const safeDeliveryFee = delivery_fee || null;
+//       const safeColor = color || null;
+//       const safeBgColor = bg_color || null;
+//       const safeColorHex = color_hex || null;
+//       const safeFields = fields || [];
+//       const safeLatitude = latitude || null;
+//       const safeLongitude = longitude || null;
+//       // Generate slug from title
+//       const slug = title
+//         .toLowerCase()
+//         .replace(/[^a-z0-9]+/g, "-")
+//         .replace(/^-+|-+$/g, "");
+//       // Check if slug is unique
+//       const [existing] = await pool.execute(
+//         "SELECT id FROM services WHERE slug = ? AND deleted_at IS NULL",
+//         [slug]
+//       );
+//       if ((existing as any[]).length > 0) {
+//         return res.status(409).json({ error: "Slug already exists" });
+//       }
+//       const params = [
+//         slug,
+//         title,
+//         safeDescription,
+//         category,
+//         safeDeliveryFee,
+//         safeColor,
+//         safeBgColor,
+//         safeColorHex,
+//         imagePath,
+//         JSON.stringify(safeFields),
+//         ownerId,
+//         owner_name,
+//         safeLatitude,
+//         safeLongitude,
+//       ];
+//       console.log("Params before execution:", params);
+//       const [result] = await pool.execute(
+//         "INSERT INTO services (slug, title, description, category, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+//         params
+//       );
+//       const serviceId = (result as any).insertId;
+//       res.status(201).json({
+//         service: {
+//           id: serviceId,
+//           slug,
+//           title,
+//           description,
+//           category,
+//           delivery_fee,
+//           color,
+//           bg_color,
+//           color_hex,
+//           image: imagePath,
+//           fields,
+//           owner_id: ownerId,
+//           owner_name,
+//           latitude,
+//           longitude,
+//           created_at: new Date().toISOString(),
+//           updated_at: new Date().toISOString(),
+//         },
+//       });
+//     } catch (error) {
+//       console.error("Create service error:", error);
+//       res.status(500).json({ error: "Internal server error" });
+//     }
+//   }
+// );
+router.post("/add-service", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), upload.single("image"), [
+    (0, express_validator_1.body)("title").notEmpty(),
     (0, express_validator_1.body)("category").isIn([
         "shop",
         "cleaning",
+        "consulting",
         "shopping",
         "transport",
         "repair",
@@ -165,206 +346,108 @@ router.post("/", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"
         "beauty",
         "other",
     ]),
+    (0, express_validator_1.body)("owner_name").notEmpty(),
     (0, express_validator_1.body)("delivery_fee").optional().isFloat({ min: 0 }),
-    (0, express_validator_1.body)("color").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("bg_color").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("color_hex").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("fields")
-        .optional()
-        .custom((value) => {
-        if (!value)
-            return true; // Allow empty
-        try {
-            const parsed = JSON.parse(value);
-            if (Array.isArray(parsed))
-                return true;
-            throw new Error("Fields must be a valid JSON array");
-        }
-        catch (e) {
-            throw new Error("Fields must be a valid JSON array");
-        }
-    }),
-    (0, express_validator_1.body)("owner_name").isLength({ min: 1 }),
     (0, express_validator_1.body)("latitude").optional().isFloat({ min: -90, max: 90 }),
     (0, express_validator_1.body)("longitude").optional().isFloat({ min: -180, max: 180 }),
-    (0, express_validator_1.body)("status").optional().isIn(["active", "inactive"]),
+    (0, express_validator_1.body)("image_url").optional().isURL(),
 ], async (req, res) => {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        const { title, description, category, delivery_fee, color, bg_color, color_hex, fields, owner_name, latitude, longitude, status, } = req.body;
-        // FIX: Check if user exists first
-        if (!req.user) {
+        if (!req.user?.user_id) {
             return res.status(401).json({ error: "Unauthorized" });
         }
+        const { title, description, category, delivery_fee, color, bg_color, color_hex, fields, owner_name, latitude, longitude, image_url, } = req.body;
         const ownerId = req.user.user_id;
-        // FIX: Validate ownerId is not undefined
-        if (!ownerId) {
-            console.error("ownerId is undefined. req.user:", req.user);
-            return res.status(400).json({ error: "Invalid user ID" });
-        }
-        // Handle image upload
-        let imagePath = null;
+        // 🔑 Image logic (FILE > URL > null)
+        let image = null;
         if (req.file) {
-            imagePath = `/uploads/${req.file.filename}`;
+            image = `/uploads/${req.file.filename}`;
         }
-        // Ensure optional fields are null if not provided
-        const safeDescription = description || null;
-        const safeDeliveryFee = delivery_fee || null;
-        const safeColor = color || null;
-        const safeBgColor = bg_color || null;
-        const safeColorHex = color_hex || null;
-        const safeFields = fields || [];
-        const safeLatitude = latitude || null;
-        const safeLongitude = longitude || null;
-        // Generate slug from title
+        else if (image_url) {
+            image = image_url;
+        }
+        // Normalize fields
+        const safeFields = normalizeFields(fields);
+        // Generate slug
         const slug = title
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/^-+|-+$/g, "");
-        // Check if slug is unique
+        // Check slug uniqueness
         const [existing] = await db_1.pool.execute("SELECT id FROM services WHERE slug = ? AND deleted_at IS NULL", [slug]);
-        if (existing.length > 0) {
+        if (existing.length) {
             return res.status(409).json({ error: "Slug already exists" });
         }
-        const params = [
+        const [result] = await db_1.pool.execute(`
+        INSERT INTO services
+        (slug, title, description, category, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [
             slug,
             title,
-            safeDescription,
+            description ?? null,
             category,
-            safeDeliveryFee,
-            safeColor,
-            safeBgColor,
-            safeColorHex,
-            imagePath,
+            delivery_fee ?? null,
+            color ?? null,
+            bg_color ?? null,
+            color_hex ?? null,
+            image,
             JSON.stringify(safeFields),
             ownerId,
             owner_name,
-            safeLatitude,
-            safeLongitude,
-        ];
-        console.log("Params before execution:", params);
-        const [result] = await db_1.pool.execute("INSERT INTO services (slug, title, description, category, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", params);
-        const serviceId = result.insertId;
+            latitude ?? null,
+            longitude ?? null,
+        ]);
         res.status(201).json({
             service: {
-                id: serviceId,
+                id: result.insertId,
                 slug,
                 title,
-                description,
-                category,
-                delivery_fee,
-                color,
-                bg_color,
-                color_hex,
-                image: imagePath,
-                fields,
-                owner_id: ownerId,
-                owner_name,
-                latitude,
-                longitude,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                image,
+                fields: safeFields,
             },
         });
     }
-    catch (error) {
-        console.error("Create service error:", error);
-        res.status(500).json({ error: "Internal server error" });
+    catch (err) {
+        console.error("Create service error:", err);
+        res.status(500).json({ error: err.message || "Internal server error" });
     }
 });
-// Update service - provider (owner) or admin
-router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), [
-    (0, express_validator_1.body)("title").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("description").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("category")
-        .optional()
-        .isIn([
-        "shop",
-        "cleaning",
-        "shopping",
-        "transport",
-        "repair",
-        "delivery",
-        "tutoring",
-        "health",
-        "food",
-        "events",
-        "home",
-        "education",
-        "technology",
-        "finance",
-        "legal",
-        "travel",
-        "beauty",
-        "entertainment",
-        "other",
-    ]),
-    (0, express_validator_1.body)("delivery_fee").optional().isFloat({ min: 0 }),
-    (0, express_validator_1.body)("color").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("bg_color").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("color_hex").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("image").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("fields")
-        .optional()
-        .custom((value) => {
-        if (!value)
-            return true; // Allow empty
-        try {
-            const parsed = JSON.parse(value);
-            if (Array.isArray(parsed))
-                return true;
-            throw new Error("Fields must be a valid JSON array");
-        }
-        catch (e) {
-            throw new Error("Fields must be a valid JSON array");
-        }
-    }),
-    (0, express_validator_1.body)("owner_name").optional().isLength({ min: 1 }),
-    (0, express_validator_1.body)("latitude").optional().isFloat({ min: -90, max: 90 }),
-    (0, express_validator_1.body)("longitude").optional().isFloat({ min: -180, max: 180 }),
-    (0, express_validator_1.body)("status").optional().isIn(["active", "inactive"]),
-], async (req, res) => {
-    const errors = (0, express_validator_1.validationResult)(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), upload.single("image"), // 👈 ADD multer
+async (req, res) => {
     try {
         const { id } = req.params;
-        const { title, description, category, delivery_fee, color, bg_color, color_hex, image, fields, owner_name, latitude, longitude, status, } = req.body;
-        const user_id = req.user.user_id;
+        const userId = Number(req.user.user_id);
         const userRole = req.user.role;
-        // Check ownership
-        const [serviceRows] = await db_1.pool.execute("SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
-        if (serviceRows.length === 0) {
+        // Fetch service
+        const [rows] = await db_1.pool.execute("SELECT owner_id FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
+        if (!rows.length) {
             return res.status(404).json({ error: "Service not found" });
         }
-        const service = serviceRows[0];
-        console.log(`Update service check: user_id=${user_id}, userRole=${userRole}, service.owner_id=${service.owner_id}`);
-        if (userRole !== "admin" && service.owner_id !== user_id) {
+        const service = rows[0];
+        // 🔒 Ownership check (FIXED)
+        if (userRole !== "admin" && Number(service.owner_id) !== userId) {
             return res.status(403).json({ error: "Forbidden" });
         }
-        // Build update query
         const updates = [];
         const params = [];
-        if (title !== undefined) {
-            updates.push("title = ?");
-            params.push(title);
-            // Regenerate slug if title changed
-            const newSlug = title
+        const { title, description, category, delivery_fee, color, bg_color, color_hex, owner_name, latitude, longitude, status, image_url, fields, } = req.body;
+        if (title) {
+            updates.push("title = ?", "slug = ?");
+            params.push(title, title
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, "-")
-                .replace(/^-+|-+$/g, "");
-            updates.push("slug = ?");
-            params.push(newSlug);
+                .replace(/^-+|-+$/g, ""));
         }
         if (description !== undefined) {
             updates.push("description = ?");
             params.push(description);
         }
-        if (category !== undefined) {
+        if (category) {
             updates.push("category = ?");
             params.push(category);
         }
@@ -384,13 +467,18 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
             updates.push("color_hex = ?");
             params.push(color_hex);
         }
-        if (image !== undefined) {
+        // 🖼 Image logic (FILE > URL)
+        if (req.file) {
             updates.push("image = ?");
-            params.push(image);
+            params.push(`/uploads/${req.file.filename}`);
+        }
+        else if (image_url) {
+            updates.push("image = ?");
+            params.push(image_url);
         }
         if (fields !== undefined) {
             updates.push("fields = ?");
-            params.push(JSON.stringify(fields));
+            params.push(JSON.stringify(normalizeFields(fields)));
         }
         if (owner_name !== undefined) {
             updates.push("owner_name = ?");
@@ -408,18 +496,16 @@ router.put("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provide
             updates.push("status = ?");
             params.push(status);
         }
-        if (updates.length === 0) {
+        if (!updates.length) {
             return res.status(400).json({ error: "No fields to update" });
         }
         params.push(id);
         await db_1.pool.execute(`UPDATE services SET ${updates.join(", ")}, updated_at = NOW() WHERE id = ?`, params);
-        // Get updated service
-        const [updatedRows] = await db_1.pool.execute("SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at, updated_at FROM services WHERE id = ?", [id]);
-        res.json({ service: updatedRows[0] });
+        res.json({ message: "Service updated successfully" });
     }
-    catch (error) {
-        console.error("Update service error:", error);
-        res.status(500).json({ error: "Internal server error" });
+    catch (err) {
+        console.error("Update service error:", err);
+        res.status(500).json({ error: err.message });
     }
 });
 // Delete service - provider (owner) or admin (soft delete)
@@ -485,16 +571,25 @@ router.get("/owner/:owner_id", auth_1.requireAuth, async (req, res) => {
         }
         const whereClause = whereConditions.join(" AND ");
         // Fetch services with pagination
-        const [rows] = await db_1.pool.query(`SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at 
-         FROM services 
-         WHERE ${whereClause} 
-         ORDER BY created_at DESC 
+        const [rows] = await db_1.pool.query(`SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at
+         FROM services
+         WHERE ${whereClause}
+         ORDER BY created_at DESC
          LIMIT ? OFFSET ?`, [...params, limit, offset]);
+        // Convert relative image paths to full URLs
+        const baseUrl = process.env.BACKEND_URL ||
+            `http://localhost:${process.env.PORT || 4000}`;
+        const processedRows = rows.map((service) => ({
+            ...service,
+            image: service.image && service.image.startsWith("/uploads/")
+                ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+                : service.image,
+        }));
         // Get total count for pagination
         const [countRows] = await db_1.pool.query(`SELECT COUNT(*) as total FROM services WHERE ${whereClause}`, params);
         const total = countRows[0].total;
         res.json({
-            services: rows,
+            services: processedRows,
             pagination: {
                 page,
                 limit,
@@ -508,5 +603,19 @@ router.get("/owner/:owner_id", auth_1.requireAuth, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+function normalizeFields(fields) {
+    if (!fields)
+        return [];
+    if (typeof fields === "string") {
+        try {
+            const parsed = JSON.parse(fields);
+            return Array.isArray(parsed) ? parsed : [];
+        }
+        catch {
+            return [];
+        }
+    }
+    return Array.isArray(fields) ? fields : [];
+}
 exports.default = router;
 //# sourceMappingURL=services.js.map

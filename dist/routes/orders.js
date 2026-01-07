@@ -84,7 +84,7 @@ router.post("/anonymous", rateLimit_1.anonymousOrderLimiter, async (req, res) =>
 router.post("/", auth_1.requireAuth, rateLimit_1.globalLimiter, async (req, res) => {
     try {
         const { serviceId, quantity } = authenticatedOrderSchema.parse(req.body);
-        const userId = req.user.userId;
+        const userId = req.user.user_id ?? req.user.userId ?? req.user.id;
         console.log(`[ORDERS] Authenticated order attempt: User ${userId} for service ${serviceId}`);
         // Check if service exists and is active - FIX: use delivery_fee
         const [serviceRows] = await db_1.pool.execute("SELECT id, delivery_fee FROM services WHERE id = ? AND status = 'active' AND deleted_at IS NULL", [serviceId]);
@@ -119,55 +119,19 @@ router.post("/", auth_1.requireAuth, rateLimit_1.globalLimiter, async (req, res)
         }
     }
 });
-router.get("/my", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"), // ensure only service providers access
-rateLimit_1.globalLimiter, async (req, res) => {
-    try {
-        const providerId = req.user.userId;
-        console.log(`[ORDERS] Fetching orders for service provider ${providerId}`);
-        // Fetch orders associated with provider's services
-        const [rows] = await db_1.pool.execute(`
-        SELECT o.id,
-               o.user_id,
-               o.anonymous_name,
-               o.anonymous_email,
-               o.anonymous_phone,
-               o.total_amount,
-               o.status,
-               o.payment_status,
-               o.created_at,
-               oi.service_id,
-               oi.quantity,
-               oi.price,
-               s.title AS service_title,
-               s.slug AS service_slug,
-               p.display_name AS user_name
-        FROM orders o
-        JOIN order_items oi ON o.id = oi.order_id
-        JOIN services s ON oi.service_id = s.id
-        LEFT JOIN profiles p ON o.user_id = p.id
-        WHERE s.owner_id = ? AND o.deleted_at IS NULL
-        ORDER BY o.created_at DESC
-        `, [providerId]);
-        console.log(`[ORDERS] Retrieved ${rows.length} orders for service provider ${providerId}`);
-        res.json({ orders: rows });
-    }
-    catch (error) {
-        console.error(`[ORDERS] Get provider orders error:`, error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
-// Get all orders (admin or service_provider) - with pagination and filtering
-router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin"), rateLimit_1.globalLimiter, async (req, res) => {
+// Admin & providers: get orders (providers see only their services' orders)
+router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin", "service_provider"), rateLimit_1.globalLimiter, async (req, res) => {
     try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 10;
         const status = req.query.status;
         const payment_status = req.query.payment_status;
         const offset = (page - 1) * limit;
+        const userRole = req.user.role;
+        const userId = req.user.user_id ?? req.user.userId ?? req.user.id;
         if (page < 1 || limit < 1) {
             return res.status(400).json({ error: "Invalid pagination parameters" });
         }
-        // Build base WHERE and params
         const conditions = ["o.deleted_at IS NULL"];
         const params = [];
         if (status) {
@@ -178,23 +142,19 @@ router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin"), rateLimit
             conditions.push("o.payment_status = ?");
             params.push(payment_status);
         }
-        // If caller is service_provider, restrict to orders that include services owned by them
-        const userRole = req.user.role;
-        const userId = req.user.userId;
+        // If requester is a service provider, restrict to orders that include their services
         if (userRole === "service_provider") {
             conditions.push(`EXISTS (
-             SELECT 1 FROM order_items oi2
-             JOIN services s2 ON oi2.service_id = s2.id
-             WHERE oi2.order_id = o.id AND s2.owner_id = ?
-           )`);
+            SELECT 1 FROM order_items oi2
+            JOIN services s2 ON oi2.service_id = s2.id
+            WHERE oi2.order_id = o.id AND s2.owner_id = ?
+          )`);
             params.push(userId);
         }
         const whereClause = conditions.join(" AND ");
-        // Count
         const [countRows] = await db_1.pool.query(`SELECT COUNT(*) as total FROM orders o WHERE ${whereClause}`, params);
         const total = countRows[0].total;
-        // Main query - include joins for items; use same filter params then add pagination
-        const queryParams = [...params, Number(limit), offset];
+        const queryParams = [...params, limit, offset];
         const [rows] = await db_1.pool.query(`
         SELECT o.id, o.user_id, o.anonymous_name, o.anonymous_email, o.anonymous_phone,
                o.total_amount, o.status, o.payment_status, o.created_at,
@@ -212,80 +172,6 @@ router.get("/", auth_1.requireAuth, (0, roles_1.requireRole)("admin"), rateLimit
         res.json({
             orders: rows,
             pagination: {
-                page: Number(page),
-                limit: Number(limit),
-                total,
-                pages: Math.ceil(total / Number(limit)),
-            },
-        });
-    }
-    catch (error) {
-        console.error(`[ORDERS] Get all orders error:`, error);
-        res.status(500).json({ error: "Internal server error" });
-    }
-});
-router.get("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider"), // only service_provider
-rateLimit_1.globalLimiter, async (req, res) => {
-    try {
-        const providerId = req.user.userId;
-        // Pagination & filters
-        const page = parseInt(req.query.page, 10) || 1;
-        const limit = parseInt(req.query.limit, 10) || 10;
-        const offset = (page - 1) * limit;
-        const status = req.query.status;
-        const payment_status = req.query.payment_status;
-        if (page < 1 || limit < 1) {
-            return res.status(400).json({ error: "Invalid pagination parameters" });
-        }
-        // Build WHERE conditions
-        const conditions = ["o.deleted_at IS NULL", "s.owner_id = ?"];
-        const params = [providerId];
-        if (status) {
-            conditions.push("o.status = ?");
-            params.push(status);
-        }
-        if (payment_status) {
-            conditions.push("o.payment_status = ?");
-            params.push(payment_status);
-        }
-        const whereClause = conditions.join(" AND ");
-        // Count total matching orders
-        const [countRows] = await db_1.pool.query(`
-        SELECT COUNT(DISTINCT o.id) as total
-        FROM orders o
-        JOIN order_items oi ON o.id = oi.order_id
-        JOIN services s ON oi.service_id = s.id
-        WHERE ${whereClause}
-        `, params);
-        const total = countRows[0].total;
-        // Fetch paginated orders with details
-        const [rows] = await db_1.pool.query(`
-        SELECT o.id,
-               o.user_id,
-               o.anonymous_name,
-               o.anonymous_email,
-               o.anonymous_phone,
-               o.total_amount,
-               o.status,
-               o.payment_status,
-               o.created_at,
-               oi.service_id,
-               oi.quantity,
-               oi.price,
-               s.title AS service_title,
-               s.slug AS service_slug,
-               p.display_name AS user_name
-        FROM orders o
-        JOIN order_items oi ON o.id = oi.order_id
-        JOIN services s ON oi.service_id = s.id
-        LEFT JOIN profiles p ON o.user_id = p.id
-        WHERE ${whereClause}
-        ORDER BY o.created_at DESC
-        LIMIT ? OFFSET ?
-        `, [...params, limit, offset]);
-        res.json({
-            orders: rows,
-            pagination: {
                 page,
                 limit,
                 total,
@@ -294,7 +180,78 @@ rateLimit_1.globalLimiter, async (req, res) => {
         });
     }
     catch (error) {
-        console.error("[ORDERS] Provider get orders error:", error);
+        console.error(`[ORDERS] Get all orders error:`, error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+// Get single order - admin sees all, provider sees only if they own the service
+router.get("/:id", auth_1.requireAuth, rateLimit_1.globalLimiter, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.user.user_id ?? req.user.userId ?? req.user.id;
+        const userRole = req.user.role;
+        console.log(`[ORDERS] Fetching order ${id} for user ${userId} (role: ${userRole})`);
+        let query = "";
+        let params = [];
+        if (userRole === "admin") {
+            query = `
+          SELECT o.id, o.user_id, o.anonymous_name, o.anonymous_email, o.anonymous_phone,
+                 o.total_amount, o.status, o.payment_status, o.created_at,
+                 oi.service_id, oi.quantity, oi.price,
+                 s.title as service_title, s.slug as service_slug,
+                 p.display_name as user_name
+          FROM orders o
+          LEFT JOIN order_items oi ON o.id = oi.order_id
+          LEFT JOIN services s ON oi.service_id = s.id
+          LEFT JOIN profiles p ON o.user_id = p.id
+          WHERE o.id = ? AND o.deleted_at IS NULL
+        `;
+            params = [id];
+        }
+        else if (userRole === "service_provider") {
+            // Provider can view order only if one of their services is in it
+            query = `
+          SELECT o.id, o.user_id, o.anonymous_name, o.anonymous_email, o.anonymous_phone,
+                 o.total_amount, o.status, o.payment_status, o.created_at,
+                 oi.service_id, oi.quantity, oi.price,
+                 s.title as service_title, s.slug as service_slug,
+                 p.display_name as user_name
+          FROM orders o
+          LEFT JOIN order_items oi ON o.id = oi.order_id
+          LEFT JOIN services s ON oi.service_id = s.id
+          LEFT JOIN profiles p ON o.user_id = p.id
+          WHERE o.id = ? AND o.deleted_at IS NULL
+            AND EXISTS (
+              SELECT 1 FROM order_items oi2
+              JOIN services s2 ON oi2.service_id = s2.id
+              WHERE oi2.order_id = o.id AND s2.owner_id = ?
+            )
+        `;
+            params = [id, userId];
+        }
+        else {
+            // Regular user: can see only their own orders
+            query = `
+          SELECT o.id, o.total_amount, o.status, o.payment_status, o.created_at,
+                 oi.service_id, oi.quantity, oi.price,
+                 s.title as service_title, s.slug as service_slug
+          FROM orders o
+          JOIN order_items oi ON o.id = oi.order_id
+          JOIN services s ON oi.service_id = s.id
+          WHERE o.id = ? AND o.user_id = ? AND o.deleted_at IS NULL
+        `;
+            params = [id, userId];
+        }
+        const [rows] = await db_1.pool.query(query, params);
+        if (rows.length === 0) {
+            return res
+                .status(404)
+                .json({ error: "Order not found or access denied" });
+        }
+        res.json({ order: rows[0] });
+    }
+    catch (error) {
+        console.error(`[ORDERS] Get order error:`, error);
         res.status(500).json({ error: "Internal server error" });
     }
 });
@@ -405,31 +362,9 @@ router.get("/track/:id", rateLimit_1.globalLimiter, async (req, res) => {
                 },
             });
         }
-        // If not anonymous, check if user is authenticated and owns the order
-        const authHeader = req.headers.authorization;
-        if (!authHeader) {
-            return res
-                .status(401)
-                .json({ error: "Authentication required for user orders" });
-        }
-        // Parse token to get user info
-        const jwt = require("jsonwebtoken");
-        const parts = authHeader.split(" ");
-        if (parts.length !== 2) {
-            return res.status(401).json({ error: "Invalid authorization header" });
-        }
-        const token = parts[1];
-        let decoded;
-        try {
-            decoded = jwt.verify(token, process.env.JWT_SECRET || "please_change_this");
-        }
-        catch (err) {
-            return res.status(401).json({ error: "Invalid token" });
-        }
-        const userId = decoded.userId ?? decoded.id ?? decoded.sub;
-        // Check if authenticated user owns this order
-        const [userRows] = await db_1.pool.query(`
-      SELECT o.id, o.total_amount, o.status, o.payment_status, o.created_at,
+        // Check if it's a user order (authenticated users only)
+        const [userOrderRows] = await db_1.pool.query(`
+      SELECT o.id, o.user_id, o.total_amount, o.status, o.payment_status, o.created_at,
              oi.service_id, oi.quantity, oi.price,
              s.title as service_title, s.slug as service_slug, s.owner_name, s.image,
              p.display_name as user_name, p.phone as provider_phone, p.email as provider_email
@@ -437,38 +372,67 @@ router.get("/track/:id", rateLimit_1.globalLimiter, async (req, res) => {
       JOIN order_items oi ON o.id = oi.order_id
       JOIN services s ON oi.service_id = s.id
       LEFT JOIN profiles p ON s.owner_id = p.id
-      WHERE o.id = ? AND o.user_id = ? AND o.deleted_at IS NULL
-    `, [id, userId]);
-        if (userRows.length === 0) {
-            return res
-                .status(404)
-                .json({ error: "Order not found or access denied" });
-        }
-        const order = userRows[0];
-        res.json({
-            order: {
-                id: order.id,
-                customer: {
-                    name: order.user_name,
-                    userId: userId,
+      WHERE o.id = ? AND o.user_id IS NOT NULL AND o.deleted_at IS NULL
+    `, [id]);
+        if (userOrderRows.length > 0) {
+            // It's a user order - require authentication
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return res
+                    .status(401)
+                    .json({ error: "Authentication required for user orders" });
+            }
+            // Parse token to get user info
+            const jwt = require("jsonwebtoken");
+            const parts = authHeader.split(" ");
+            if (parts.length !== 2) {
+                return res.status(401).json({ error: "Invalid authorization header" });
+            }
+            const token = parts[1];
+            let decoded;
+            try {
+                decoded = jwt.verify(token, process.env.JWT_SECRET || "please_change_this");
+            }
+            catch (err) {
+                return res.status(401).json({ error: "Invalid token" });
+            }
+            const userId = decoded.userId ?? decoded.id ?? decoded.sub;
+            // Check if authenticated user owns this order
+            const order = userOrderRows[0];
+            if (order.user_id !== userId) {
+                return res
+                    .status(403)
+                    .json({ error: "Access denied: You can only view your own orders" });
+            }
+            res.json({
+                order: {
+                    id: order.id,
+                    customer: {
+                        name: order.user_name,
+                        userId: userId,
+                    },
+                    totalAmount: order.total_amount,
+                    status: order.status,
+                    payment_status: order.payment_status,
+                    createdAt: order.created_at,
+                    items: userOrderRows.map((row) => ({
+                        serviceId: row.service_id,
+                        serviceTitle: row.service_title,
+                        serviceSlug: row.service_slug,
+                        serviceImage: row.image,
+                        providerName: row.owner_name,
+                        providerPhone: row.provider_phone,
+                        providerEmail: row.provider_email,
+                        quantity: row.quantity,
+                        price: row.price,
+                    })),
                 },
-                totalAmount: order.total_amount,
-                status: order.status,
-                payment_status: order.payment_status,
-                createdAt: order.created_at,
-                items: userRows.map((row) => ({
-                    serviceId: row.service_id,
-                    serviceTitle: row.service_title,
-                    serviceSlug: row.service_slug,
-                    serviceImage: row.image,
-                    providerName: row.owner_name,
-                    providerPhone: row.provider_phone,
-                    providerEmail: row.provider_email,
-                    quantity: row.quantity,
-                    price: row.price,
-                })),
-            },
-        });
+            });
+        }
+        else {
+            // Order not found at all
+            return res.status(404).json({ error: "Order not found" });
+        }
     }
     catch (error) {
         console.error(`[ORDERS] Track order error:`, error);
