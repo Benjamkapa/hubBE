@@ -45,10 +45,13 @@ app.use(
     origin: [
       "https://hudumalynk.vercel.app/",
       "http://localhost:3000/",
+      "http://localhost:3001/", // Add common dev ports
+      "http://localhost:5173/", // Vite default
       ...allowedOrigins,
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
