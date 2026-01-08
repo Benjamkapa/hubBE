@@ -1,4 +1,4 @@
-This guide explains how to deploy the HudumaHub backend to Coolify.
+This guide explains how to deploy the HudumaLynk backend to Coolify.
 
 ## Prerequisites
 
@@ -29,7 +29,7 @@ PORT=4000
 DB_HOST=your_mysql_host
 DB_USER=your_mysql_user
 DB_PASSWORD=your_mysql_password
-DB_NAME=hudumahub
+DB_NAME=HudumaLynk
 
 # JWT Configuration
 JWT_SECRET=your_super_secret_jwt_key_here
@@ -45,7 +45,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
 SMTP_PASS=your_app_password
-SMTP_FROM=noreply@hudumahub.com
+SMTP_FROM=noreply@HudumaLynk.com
 ```
 
 ### 3. Database Setup
@@ -138,9 +138,9 @@ const API_BASE_URL = 'https://your-backend-domain.com/api';
 
 =======
 
-# HudumaHub Backend Deployment Guide
+# HudumaLynk Backend Deployment Guide
 
-This guide explains how to deploy the HudumaHub backend to Coolify, starting with the FREE tier.
+This guide explains how to deploy the HudumaLynk backend to Coolify, starting with the FREE tier.
 
 ## 🚀 Quick Start with Coolify Free Tier
 
@@ -170,7 +170,7 @@ Use **PlanetScale** (free tier available):
 
 1. Go to https://planetscale.com
 2. Sign up (free)
-3. Create a new database called `hudumahub`
+3. Create a new database called `HudumaLynk`
 4. Go to "Settings" → "Passwords" → "New password"
 5. Create a password with name "coolify"
 6. Copy the connection details
@@ -186,9 +186,9 @@ NODE_ENV=production
 DB_HOST=your_planetscale_host
 DB_USER=your_planetscale_user
 DB_PASSWORD=your_planetscale_password
-DB_NAME=hudumahub
+DB_NAME=HudumaLynk
 JWT_SECRET=your_random_secret_key_here_make_it_long_and_secure
-FRONTEND_URL=https://hudumahub.vercel.app
+FRONTEND_URL=https://HudumaLynk.vercel.app
 ```
 
 **Optional (for email - can skip for now):**
@@ -204,7 +204,7 @@ SMTP_PASS=your_app_password
 
 1. Click **"Deploy"** in Coolify
 2. Wait for build to complete (5-10 minutes)
-3. Your app will get a URL like: `https://hudumahub-backend-abc123.coolify.app`
+3. Your app will get a URL like: `https://HudumaLynk-backend-abc123.coolify.app`
 
 ### Step 6: Initialize Database
 
@@ -254,12 +254,12 @@ const API_BASE_URL = "https://your-coolify-url.coolify.app/api";
 ### Database Connection Issues:
 
 - Double-check PlanetScale connection string
-- Make sure database name is `hudumahub`
+- Make sure database name is `HudumaLynk`
 - Test connection from Coolify terminal: `mysql -h $DB_HOST -u $DB_USER -p$DB_PASSWORD $DB_NAME`
 
 ### CORS Issues:
 
-- Ensure `FRONTEND_URL` is set to `https://hudumahub.vercel.app`
+- Ensure `FRONTEND_URL` is set to `https://HudumaLynk.vercel.app`
 - Check browser console for CORS errors
 
 ## 💰 Upgrading from Free Tier
@@ -287,7 +287,7 @@ Push changes to your repository → Coolify auto-deploys!
 
 - Coolify Docs: https://coolify.io/docs
 - PlanetScale Docs: https://planetscale.com/docs
-- HudumaHub Issues: Create GitHub issues
+- HudumaLynk Issues: Create GitHub issues
 
 ---
 

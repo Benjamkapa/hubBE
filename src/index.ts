@@ -38,13 +38,11 @@ const PORT = Number(process.env.PORT || 4000);
 app.use(helmet());
 app.disable("x-powered-by");
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-].filter(Boolean) as string[];
+const allowedOrigins = [process.env.FRONTEND_URL].filter(Boolean) as string[];
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: ["https://hudumalynkbe-yjv2.onrender.com/api/services", ...allowedOrigins],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
@@ -206,8 +204,8 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error("❌ Unhandled error:", err.stack || err.message || err);
   if (!res.headersSent) {
     res
-      .status(err.status)
-      .json({ error: err.message || "500 Internal Server Error" });
+      .status(err.status || 500)
+      .json({ error: err.message || "Internal Server Error" });
   }
 });
 
@@ -222,7 +220,7 @@ app.all("*", (req: Request, res: Response) => {
 
 app.listen(PORT, () => {
   console.log(
-    `🚀 HudumaHub server listening on port:${PORT} (env=${
+    `🚀 HudumaLynk server listening on port:${PORT} (env=${
       process.env.NODE_ENV || "dev"
     })`
   );

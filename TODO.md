@@ -40,5 +40,5 @@
 
 ## Notes
 
-- Default 'from' email is set to 'noreply@hudumahub.com' if RESEND_FROM is not provided
+- Default 'from' email is set to 'noreply@HudumaLynk.com' if RESEND_FROM is not provided
 - Ensure RESEND_API_KEY is set in production environment

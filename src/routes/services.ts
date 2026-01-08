@@ -120,8 +120,7 @@ router.get(
 
       // Convert relative image paths to full URLs
       const baseUrl =
-        process.env.BACKEND_URL ||
-        `http://localhost:${process.env.PORT || 4000}`;
+        process.env.BACKEND_URL;
       const processedRows = (rows as any[]).map((service) => ({
         ...service,
         image:
@@ -185,8 +184,7 @@ router.get("/:slug", optionalAuth, async (req: Request, res: Response) => {
 
     // Convert relative image paths to full URLs
     const baseUrl =
-      process.env.BACKEND_URL ||
-      `http://localhost:${process.env.PORT || 4000}`;
+      process.env.BACKEND_URL;
     const processedService = {
       ...service,
       image:
@@ -748,8 +746,7 @@ router.get(
 
       // Convert relative image paths to full URLs
       const baseUrl =
-        process.env.BACKEND_URL ||
-        `http://localhost:${process.env.PORT || 4000}`;
+        process.env.BACKEND_URL;
       const processedRows = (rows as any[]).map((service) => ({
         ...service,
         image:

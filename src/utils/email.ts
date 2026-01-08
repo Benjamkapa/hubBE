@@ -505,14 +505,14 @@ export const sendOrderIdEmail = async (
 // ): Promise<void> => {
 //   const resetUrl = `${process.env.FRONTEND_URL}/auth/update-password?token=${resetToken}`;
 //   const currentYear = new Date().getFullYear();
-//   const subject = "Reset Your HudumaHub Password";
-//   const text = `We received a request to reset the password for your HudumaHub account. Click the link to set a new password: ${resetUrl}`;
+//   const subject = "Reset Your HudumaLynk Password";
+//   const text = `We received a request to reset the password for your HudumaLynk account. Click the link to set a new password: ${resetUrl}`;
 //   const html = `<!DOCTYPE html>
 // <html lang="en">
 // <head>
 //     <meta charset="UTF-8">
 //     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Reset Your HudumaHub Password</title>
+//     <title>Reset Your HudumaLynk Password</title>
 //     <style>
 //         body {
 //             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -576,14 +576,14 @@ export const sendOrderIdEmail = async (
 //             <h1>Reset Your Password</h1>
 //         </div>
 //         <div class="email-body">
-//             <p>We received a request to reset the password for your HudumaHub account. Click the button below to set a new password.</p>
+//             <p>We received a request to reset the password for your HudumaLynk account. Click the button below to set a new password.</p>
 //             <a href="${resetUrl}" class="reset-button">Reset Password</a>
 //             <p style="margin-top: 30px; font-size: 14px; color: #666;">
 //                 Not expecting this email? No worries! Your account is safe.
 //             </p>
 //         </div>
 //         <div class="email-footer">
-//             © ${currentYear} HudumaHub. All rights reserved.
+//             © ${currentYear} HudumaLynk. All rights reserved.
 //         </div>
 //     </div>
 // </body>
@@ -599,14 +599,14 @@ export const sendOrderIdEmail = async (
 //   const backendUrl = process.env.BACKEND_URL;
 //   const verificationUrl = `${backendUrl}/api/auth/verify-email`;
 //   const currentYear = new Date().getFullYear();
-//   const subject = "Verify Your HudumaHub Account";
-//   const text = `Welcome to HudumaHub! Please verify your email address by clicking this link: ${verificationUrl}`;
+//   const subject = "Verify Your HudumaLynk Account";
+//   const text = `Welcome to HudumaLynk! Please verify your email address by clicking this link: ${verificationUrl}`;
 //   const html = `<!DOCTYPE html>
 // <html lang="en">
 // <head>
 //     <meta charset="UTF-8">
 //     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Verify Your HudumaHub Account</title>
+//     <title>Verify Your HudumaLynk Account</title>
 //     <style>
 //         body {
 //             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -662,7 +662,7 @@ export const sendOrderIdEmail = async (
 // <body>
 //     <div class="email-container">
 //         <div class="email-header">
-//             <h1>Welcome to HudumaHub!</h1>
+//             <h1>Welcome to HudumaLynk!</h1>
 //         </div>
 //         <div class="email-body">
 //             <p>Thank you for signing up! Please verify your email address to activate your account.</p>
@@ -675,7 +675,7 @@ export const sendOrderIdEmail = async (
 //             </p>
 //         </div>
 //         <div class="email-footer">
-//             © ${currentYear} HudumaHub. All rights reserved.
+//             © ${currentYear} HudumaLynk. All rights reserved.
 //         </div>
 //     </div>
 // </body>
@@ -690,14 +690,14 @@ export const sendOrderIdEmail = async (
 // ): Promise<void> => {
 //   const magicUrl = `${process.env.FRONTEND_URL}/magic-login?token=${magicToken}`;
 //   const currentYear = new Date().getFullYear();
-//   const subject = "Your HudumaHub Magic Link";
-//   const text = `Click this link to sign in to your HudumaHub account: ${magicUrl}`;
+//   const subject = "Your HudumaLynk Magic Link";
+//   const text = `Click this link to sign in to your HudumaLynk account: ${magicUrl}`;
 //   const html = `<!DOCTYPE html>
 // <html lang="en">
 // <head>
 //     <meta charset="UTF-8">
 //     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <title>Your HudumaHub Magic Link</title>
+//     <title>Your HudumaLynk Magic Link</title>
 //     <style>
 //         body {
 //             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -753,14 +753,14 @@ export const sendOrderIdEmail = async (
 //             <h1>Magic Link Login</h1>
 //         </div>
 //         <div class="email-body">
-//             <p>Click the button below to sign in to your HudumaHub account instantly.</p>
+//             <p>Click the button below to sign in to your HudumaLynk account instantly.</p>
 //             <a href="${magicUrl}" class="magic-button">Sign In</a>
 //             <p style="margin-top: 30px; font-size: 14px; color: #666;">
 //                 This link will expire in 15 minutes for security reasons.
 //             </p>
 //         </div>
 //         <div class="email-footer">
-//             © ${currentYear} HudumaHub. All rights reserved.
+//             © ${currentYear} HudumaLynk. All rights reserved.
 //         </div>
 //     </div>
 // </body>
@@ -776,14 +776,14 @@ export const sendOrderIdEmail = async (
 //   serviceImage?: string
 // ): Promise<void> => {
 //   const currentYear = new Date().getFullYear();
-//   const subject = "Your HudumaHub Order ID";
+//   const subject = "Your HudumaLynk Order ID";
 //   const text = `Your order ID is: ${orderId}`;
 //   const html = `<!DOCTYPE html>
 // <html lang="en">
 // <head>
 // <meta charset="UTF-8" />
 // <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-// <title>Your HudumaHub Order</title>
+// <title>Your HudumaLynk Order</title>
 
 // <style>
 //   body {
@@ -881,11 +881,11 @@ export const sendOrderIdEmail = async (
 // <div class="email-container">
 
 //   <div class="header">
-//     <h1>Your HudumaHub Order ID</h1>
+//     <h1>Your HudumaLynk Order ID</h1>
 //   </div>
 
 //   <div class="body">
-//     <p>Thank you for placing your order with HudumaHub. Below are your order details:</p>
+//     <p>Thank you for placing your order with HudumaLynk. Below are your order details:</p>
 
 //     <table class="order-table">
 //       <tr>
@@ -910,7 +910,7 @@ export const sendOrderIdEmail = async (
 //   </div>
 
 //   <div class="footer">
-//     © ${currentYear} HudumaHub. All rights reserved.
+//     © ${currentYear} HudumaLynk. All rights reserved.
 //   </div>
 
 // </div>
