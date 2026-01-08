@@ -136,7 +136,7 @@ export const sendEmailVerification = async (
   verificationToken: string
 ): Promise<void> => {
   const backendUrl = process.env.BACKEND_URL;
-  const verificationUrl = `${backendUrl}/api/auth/verify-email`;
+  const verificationUrl = "https://hudumalynkbe-yjv2.onrender.com/api/auth/verify-email";
   const currentYear = new Date().getFullYear();
   const subject = "Verify Your hudumalynk Account";
   const text = `Welcome to hudumalynk! Please verify your email address by clicking this link: ${verificationUrl}`;
