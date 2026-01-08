@@ -401,7 +401,7 @@ router.post("/verify-email", [body("token").exists()], async (req, res) => {
       [user.id]
     );
 
-    return res.redirect(`${process.env.FRONTEND_URL}/auth/signin`);
+    return res.redirect("https://hudumalynk.vercel.app/auth/signin");
 
     // return res.json({
     //   success: true,
