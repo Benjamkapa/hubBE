@@ -42,7 +42,11 @@ const allowedOrigins = [process.env.FRONTEND_URL].filter(Boolean) as string[];
 
 app.use(
   cors({
-    origin: ["https://hudumalynkbe-yjv2.onrender.com/api/services", ...allowedOrigins],
+    origin: [
+      "https://hudumalynk.vercel.app/",
+      "http://localhost:3000/",
+      ...allowedOrigins,
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
