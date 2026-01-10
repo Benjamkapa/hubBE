@@ -13,6 +13,7 @@ import authRoutes from "./routes/auth";
 import serviceRoutes from "./routes/services";
 import orderRoutes from "./routes/orders";
 import userRoutes from "./routes/users";
+import uploadRoutes from "./routes/uploads";
 import { pool } from "./config/db";
 import { requireAuth, AuthRequest } from "./middleware/auth";
 import { requireRole } from "./middleware/roles";
@@ -104,6 +105,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api", uploadRoutes);
 
 // Get service statistics - admin only
 app.get(

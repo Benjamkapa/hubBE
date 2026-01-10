@@ -227,7 +227,7 @@ export const sendMagicLinkEmail = async (
   email: string,
   magicToken: string
 ): Promise<void> => {
-  const magicUrl = `${process.env.FRONTEND_URL}/magic-login?token=${magicToken}`;
+  const magicUrl = `https://hudumalynk.vercel.app/auth/magic-login?token=${magicToken}`;
   const currentYear = new Date().getFullYear();
   const subject = "Your hudumalynk Magic Link";
   const text = `Click this link to sign in to your hudumalynk account: ${magicUrl}`;
