@@ -68,85 +68,81 @@ const optionalAuth = (req: Request, _res: Response, next: any) => {
 };
 
 // List services with pagination and filtering
-router.get(
-  "/",
-  async (req: AuthRequest, res: Response) => {
-    try {
-      const page = parseInt(req.query.page as string, 10) || 1;
-      const limit = parseInt(req.query.limit as string, 10) || 10;
-      const category = req.query.category as string;
-      const owner_id = req.query.owner_id as string | undefined; // Keep as query param
-      const owner_name = req.query.owner_name as string;
-      const status = req.query.status as string;
+router.get("/", async (req: AuthRequest, res: Response) => {
+  try {
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = parseInt(req.query.limit as string, 10) || 10;
+    const category = req.query.category as string;
+    const owner_id = req.query.owner_id as string | undefined; // Keep as query param
+    const owner_name = req.query.owner_name as string;
+    const status = req.query.status as string;
 
-      // Basic validation
-      if (page < 1 || limit < 1) {
-        return res.status(400).json({ error: "Invalid pagination parameters" });
-      }
-
-      const offset = (page - 1) * limit;
-
-      // Build WHERE clause
-      const whereConditions: string[] = ["deleted_at IS NULL"];
-      const params: any[] = [];
-
-      if (category) {
-        whereConditions.push("category = ?");
-        params.push(category);
-      }
-      if (owner_id) {
-        // Only filter if explicitly provided in query
-        whereConditions.push("owner_id = ?");
-        params.push(owner_id);
-      }
-      if (owner_name) {
-        whereConditions.push("owner_name = ?");
-        params.push(owner_name);
-      }
-      if (status) {
-        whereConditions.push("status = ?");
-        params.push(status);
-      }
-
-      const whereClause = whereConditions.join(" AND ");
-
-      const [rows] = await pool.query(
-        `SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at FROM services WHERE ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
-        [...params, limit, offset]
-      );
-
-      // Convert relative image paths to full URLs
-      const baseUrl =
-        process.env.BACKEND_URL;
-      const processedRows = (rows as any[]).map((service) => ({
-        ...service,
-        image:
-          service.image && service.image.startsWith("/uploads/")
-            ? `${baseUrl.replace(/\/$/, "")}${service.image}`
-            : service.image,
-      }));
-
-      const [countRows] = await pool.query(
-        `SELECT COUNT(*) as total FROM services WHERE ${whereClause}`,
-        params
-      );
-      const total = (countRows as any)[0].total;
-
-      res.json({
-        services: processedRows,
-        pagination: {
-          page: Number(page),
-          limit: Number(limit),
-          total,
-          pages: Math.ceil(total / Number(limit)),
-        },
-      });
-    } catch (error) {
-      console.error("List services error:", error);
-      res.status(500).json({ error: "Internal server error" });
+    // Basic validation
+    if (page < 1 || limit < 1) {
+      return res.status(400).json({ error: "Invalid pagination parameters" });
     }
+
+    const offset = (page - 1) * limit;
+
+    // Build WHERE clause
+    const whereConditions: string[] = ["deleted_at IS NULL"];
+    const params: any[] = [];
+
+    if (category) {
+      whereConditions.push("category = ?");
+      params.push(category);
+    }
+    if (owner_id) {
+      // Only filter if explicitly provided in query
+      whereConditions.push("owner_id = ?");
+      params.push(owner_id);
+    }
+    if (owner_name) {
+      whereConditions.push("owner_name = ?");
+      params.push(owner_name);
+    }
+    if (status) {
+      whereConditions.push("status = ?");
+      params.push(status);
+    }
+
+    const whereClause = whereConditions.join(" AND ");
+
+    const [rows] = await pool.query(
+      `SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at FROM services WHERE ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+      [...params, limit, offset]
+    );
+
+    // Convert relative image paths to full URLs
+    const baseUrl = process.env.BACKEND_URL;
+    const processedRows = (rows as any[]).map((service) => ({
+      ...service,
+      image:
+        service.image && service.image.startsWith("/uploads/")
+          ? `${baseUrl.replace(/\/$/, "")}${service.image}`
+          : service.image,
+    }));
+
+    const [countRows] = await pool.query(
+      `SELECT COUNT(*) as total FROM services WHERE ${whereClause}`,
+      params
+    );
+    const total = (countRows as any)[0].total;
+
+    res.json({
+      services: processedRows,
+      pagination: {
+        page: Number(page),
+        limit: Number(limit),
+        total,
+        pages: Math.ceil(total / Number(limit)),
+      },
+    });
+  } catch (error) {
+    console.error("List services error:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-);
+});
 
 // Get by slug
 router.get("/:slug", optionalAuth, async (req: Request, res: Response) => {
@@ -180,8 +176,7 @@ router.get("/:slug", optionalAuth, async (req: Request, res: Response) => {
     }
 
     // Convert relative image paths to full URLs
-    const baseUrl =
-      process.env.BACKEND_URL;
+    const baseUrl = process.env.BACKEND_URL;
     const processedService = {
       ...service,
       image:
@@ -470,7 +465,60 @@ router.put(
   }
 );
 
-// Delete service - provider (owner) or admin (soft delete)
+// Check for associated orders before deletion - provider (owner) or admin
+router.get(
+  "/:id/delete-check",
+  requireAuth,
+  requireRole("service_provider", "admin"),
+  async (req: AuthRequest, res: Response) => {
+    try {
+      const { id } = req.params;
+      const user_id = req.user!.user_id;
+      const userRole = req.user!.role;
+
+      // Check ownership
+      const [serviceRows] = await pool.execute(
+        "SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL",
+        [id]
+      );
+      if ((serviceRows as any[]).length === 0) {
+        return res.status(404).json({ error: "Service not found" });
+      }
+      const service = (serviceRows as any[])[0];
+      if (userRole !== "admin" && service.owner_id !== user_id) {
+        return res.status(403).json({ error: "Forbidden" });
+      }
+
+      // Count associated orders
+      const [orderCountRows] = await pool.execute(
+        "SELECT COUNT(DISTINCT o.id) as order_count FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.service_id = ? AND o.deleted_at IS NULL",
+        [id]
+      );
+      const orderCount = (orderCountRows as any[])[0].order_count;
+
+      if (orderCount > 0) {
+        res.json({
+          warning: true,
+          message: `This service has ${orderCount} associated order(s). Deleting this service will also delete these orders and cannot be undone.`,
+          order_count: orderCount,
+          service_title: service.title,
+        });
+      } else {
+        res.json({
+          warning: false,
+          message: "No associated orders found. Service can be safely deleted.",
+          order_count: 0,
+          service_title: service.title,
+        });
+      }
+    } catch (error) {
+      console.error("Delete check error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+// Delete service - provider (owner) or admin (soft delete with cascading)
 router.delete(
   "/:id",
   requireAuth,
@@ -483,7 +531,7 @@ router.delete(
 
       // Check ownership
       const [serviceRows] = await pool.execute(
-        "SELECT owner_id FROM services WHERE id = ? AND deleted_at IS NULL",
+        "SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL",
         [id]
       );
       if ((serviceRows as any[]).length === 0) {
@@ -494,23 +542,30 @@ router.delete(
         return res.status(403).json({ error: "Forbidden" });
       }
 
-      // Check for existing orders
-      const [orderRows] = await pool.execute(
-        "SELECT id FROM order_items WHERE service_id = ? LIMIT 1",
+      // Get count of orders that will be affected
+      const [orderCountRows] = await pool.execute(
+        "SELECT COUNT(DISTINCT o.id) as order_count FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.service_id = ? AND o.deleted_at IS NULL",
         [id]
       );
-      if ((orderRows as any[]).length > 0) {
-        return res
-          .status(409)
-          .json({ error: "Cannot delete service with existing orders" });
-      }
+      const orderCount = (orderCountRows as any[])[0].order_count;
 
+      // Soft delete the service (this will cascade to order_items due to FK constraints)
       await pool.execute(
         "UPDATE services SET deleted_at = NOW() WHERE id = ?",
         [id]
       );
 
-      res.json({ message: "Service deleted successfully" });
+      // Soft delete associated orders (since order_items are deleted via CASCADE, orders may become empty)
+      await pool.execute(
+        "UPDATE orders SET deleted_at = NOW() WHERE id IN (SELECT DISTINCT o.id FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.service_id = ?)",
+        [id]
+      );
+
+      res.json({
+        message: "Service deleted successfully",
+        affected_orders: orderCount,
+        service_title: service.title,
+      });
     } catch (error) {
       console.error("Delete service error:", error);
       res.status(500).json({ error: "Internal server error" });
@@ -572,8 +627,7 @@ router.get(
       );
 
       // Convert relative image paths to full URLs
-      const baseUrl =
-        process.env.BACKEND_URL;
+      const baseUrl = process.env.BACKEND_URL;
       const processedRows = (rows as any[]).map((service) => ({
         ...service,
         image:

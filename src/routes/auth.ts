@@ -340,8 +340,8 @@ router.post("/forgot-password", [body("email").isEmail()], async (req, res) => {
   }
 });
 
-/**temps
- * Reset password using token
+/**
+ * Reset password using token (one-time use)
  */
 router.post(
   "/reset-password",
@@ -361,9 +361,15 @@ router.post(
       if (!expiry || expiry < new Date())
         return res.status(400).json({ error: "Invalid or expired token" });
 
+      // Clear the token immediately to make it one-time use
+      await pool.query(
+        "UPDATE profiles SET reset_token = NULL, reset_token_expiry = NULL WHERE id = ?",
+        [user.id]
+      );
+
       const newHash = await bcrypt.hash(newPassword, 12);
       await pool.query(
-        "UPDATE profiles SET password_hash = ?, reset_token = NULL, reset_token_expiry = NULL, updated_at = NOW() WHERE id = ?",
+        "UPDATE profiles SET password_hash = ?, updated_at = NOW() WHERE id = ?",
         [newHash, user.id]
       );
 
