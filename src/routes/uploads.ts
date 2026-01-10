@@ -2,7 +2,7 @@ import express from "express";
 import cloudinary from "../config/cloudinary";
 import { upload } from "../middleware/upload";
 
-const router = express.Router();
+const router: express.Router = express.Router();
 
 router.post(
   "/upload/service-image",

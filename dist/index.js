@@ -17,6 +17,7 @@ const auth_1 = __importDefault(require("./routes/auth"));
 const services_1 = __importDefault(require("./routes/services"));
 const orders_1 = __importDefault(require("./routes/orders"));
 const users_1 = __importDefault(require("./routes/users"));
+const uploads_1 = __importDefault(require("./routes/uploads"));
 const db_1 = require("./config/db");
 const auth_2 = require("./middleware/auth");
 const roles_1 = require("./middleware/roles");
@@ -38,17 +39,16 @@ const PORT = Number(process.env.PORT || 4000);
 // security
 app.use((0, helmet_1.default)());
 app.disable("x-powered-by");
-const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    "http://localhost:3000", // React dev server
-    "http://localhost:4000", // Backend itself
-    "http://127.0.0.1:3000", // Alternative localhost
-    "http://127.0.0.1:4000", // Alternative localhost
-].filter(Boolean);
+const allowedOrigins = [process.env.FRONTEND_URL].filter(Boolean);
 app.use((0, cors_1.default)({
-    origin: allowedOrigins,
+    origin: [
+        "https://hudumalynk.vercel.app",
+        "http://localhost:3000",
+        ...allowedOrigins,
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    // allowedHeaders: ["Content-Type", "Authorization"],
 }));
 app.use((0, morgan_1.default)(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 app.use((0, compression_1.default)());
@@ -97,6 +97,7 @@ app.use("/api/auth", auth_1.default);
 app.use("/api/services", services_1.default);
 app.use("/api/orders", orders_1.default);
 app.use("/api/users", users_1.default);
+app.use("/api", uploads_1.default);
 // Get service statistics - admin only
 app.get("/api/stats/services", auth_2.requireAuth, (0, roles_1.requireRole)("admin"), async (req, res) => {
     try {
@@ -108,7 +109,7 @@ app.get("/api/stats/services", auth_2.requireAuth, (0, roles_1.requireRole)("adm
     }
     catch (error) {
         console.error("Get service stats error:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: " Internal server error" });
     }
 });
 // Handle POST /api/auth/verify-email for form submission
@@ -136,6 +137,29 @@ app.post("/api/auth/verify-email", express_1.default.urlencoded({ extended: true
         res.status(500).send("Server error");
     }
 });
+// Setup DB route (development only - remove after first use)
+if (process.env.NODE_ENV !== "production") {
+    app.get("/api/setup-db", async (req, res) => {
+        try {
+            const fs = require("fs");
+            const path = require("path");
+            const migrationsDir = path.join(process.cwd(), "migrations");
+            const files = fs.readdirSync(migrationsDir).sort();
+            for (const file of files) {
+                if (file.endsWith(".sql")) {
+                    const sql = fs.readFileSync(path.join(migrationsDir, file), "utf8");
+                    await db_1.pool.execute(sql);
+                    console.log(`✅ Executed migration: ${file}`);
+                }
+            }
+            res.json({ message: "Database setup complete", migrations: files });
+        }
+        catch (error) {
+            console.error("Setup DB error:", error);
+            res.status(500).json({ error: "Database setup failed" });
+        }
+    });
+}
 // health
 app.get("/api/health", (req, res) => {
     res.json({
@@ -162,6 +186,6 @@ app.all("*", (req, res) => {
     });
 });
 app.listen(PORT, () => {
-    console.log(`🚀 HudumaHub server listening on port:${PORT} (env=${process.env.NODE_ENV || "dev"})`);
+    console.log(`🚀 HudumaLynk server listening on port:${PORT} (env=${process.env.NODE_ENV || "dev"})`);
 });
 //# sourceMappingURL=index.js.map

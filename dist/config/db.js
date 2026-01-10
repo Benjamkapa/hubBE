@@ -17,6 +17,9 @@ exports.pool = promise_1.default.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
+    ssl: {
+        rejectUnauthorized: true,
+    },
 });
 exports.default = exports.pool;
 //# sourceMappingURL=db.js.map

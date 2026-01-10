@@ -299,8 +299,30 @@ router.post("/forgot-password", [(0, express_validator_1.body)("email").isEmail(
         return res.status(500).json({ error: "Server error" });
     }
 });
-/**temps
- * Reset password using token
+/**
+ * Validate reset token (for frontend to check before showing form)
+ */
+router.get("/validate-reset-token", async (req, res) => {
+    const { token } = req.query;
+    if (!token || typeof token !== "string")
+        return res.status(400).json({ error: "Token required" });
+    try {
+        const [rows] = await db_1.pool.query("SELECT id, reset_token_expiry FROM profiles WHERE reset_token = ? LIMIT 1", [token]);
+        const user = rows[0];
+        if (!user)
+            return res.status(400).json({ error: "Invalid or expired token" });
+        const expiry = new Date(user.reset_token_expiry);
+        if (!expiry || expiry < new Date())
+            return res.status(400).json({ error: "Invalid or expired token" });
+        return res.json({ valid: true });
+    }
+    catch (err) {
+        console.error("Validate reset token error:", err.message || err);
+        return res.status(500).json({ error: "Server error" });
+    }
+});
+/**
+ * Reset password using token (one-time use)
  */
 router.post("/reset-password", [(0, express_validator_1.body)("token").exists(), (0, express_validator_1.body)("newPassword").isLength({ min: 8 })], async (req, res) => {
     const { token, newPassword } = req.body;
@@ -312,8 +334,10 @@ router.post("/reset-password", [(0, express_validator_1.body)("token").exists(),
         const expiry = new Date(user.reset_token_expiry);
         if (!expiry || expiry < new Date())
             return res.status(400).json({ error: "Invalid or expired token" });
+        // Clear the token immediately to make it one-time use
+        await db_1.pool.query("UPDATE profiles SET reset_token = NULL, reset_token_expiry = NULL WHERE id = ?", [user.id]);
         const newHash = await bcryptjs_1.default.hash(newPassword, 12);
-        await db_1.pool.query("UPDATE profiles SET password_hash = ?, reset_token = NULL, reset_token_expiry = NULL, updated_at = NOW() WHERE id = ?", [newHash, user.id]);
+        await db_1.pool.query("UPDATE profiles SET password_hash = ?, updated_at = NOW() WHERE id = ?", [newHash, user.id]);
         return res.json({
             success: true,
             message: "Password reset successfully",
@@ -321,6 +345,33 @@ router.post("/reset-password", [(0, express_validator_1.body)("token").exists(),
     }
     catch (err) {
         console.error("Reset password error:", err.message || err);
+        return res.status(500).json({ error: "Server error" });
+    }
+});
+/**
+ * Change password using token (one-time use, for logged-out users)
+ */
+router.post("/change-password", [(0, express_validator_1.body)("token").exists(), (0, express_validator_1.body)("newPassword").isLength({ min: 8 })], async (req, res) => {
+    const { token, newPassword } = req.body;
+    try {
+        const [rows] = await db_1.pool.query("SELECT id, reset_token_expiry FROM profiles WHERE reset_token = ? LIMIT 1", [token]);
+        const user = rows[0];
+        if (!user)
+            return res.status(400).json({ error: "Invalid or expired token" });
+        const expiry = new Date(user.reset_token_expiry);
+        if (!expiry || expiry < new Date())
+            return res.status(400).json({ error: "Invalid or expired token" });
+        // Clear the token immediately to make it one-time use
+        await db_1.pool.query("UPDATE profiles SET reset_token = NULL, reset_token_expiry = NULL WHERE id = ?", [user.id]);
+        const newHash = await bcryptjs_1.default.hash(newPassword, 12);
+        await db_1.pool.query("UPDATE profiles SET password_hash = ?, updated_at = NOW() WHERE id = ?", [newHash, user.id]);
+        return res.json({
+            success: true,
+            message: "Password changed successfully",
+        });
+    }
+    catch (err) {
+        console.error("Change password error:", err.message || err);
         return res.status(500).json({ error: "Server error" });
     }
 });
@@ -338,7 +389,7 @@ router.post("/verify-email", [(0, express_validator_1.body)("token").exists()], 
         if (!expiry || expiry < new Date())
             return res.status(400).json({ error: "Invalid or expired token" });
         await db_1.pool.query("UPDATE profiles SET email_verified = TRUE, verification_token = NULL, verification_token_expiry = NULL, updated_at = NOW() WHERE id = ?", [user.id]);
-        return res.redirect(`${process.env.FRONTEND_URL}/auth/signin`);
+        return res.redirect("https://hudumalynk.vercel.app/auth/signin");
         // return res.json({
         //   success: true,
         //   message: "Email verified successfully",

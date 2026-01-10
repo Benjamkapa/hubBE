@@ -63,11 +63,7 @@ const optionalAuth = (req, _res, next) => {
     next();
 };
 // List services with pagination and filtering
-router.get("/", 
-// requireAuth,
-// requireRole("admin", "service_provider"),
-// globalLimiter,
-async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 10;
@@ -103,8 +99,7 @@ async (req, res) => {
         const whereClause = whereConditions.join(" AND ");
         const [rows] = await db_1.pool.query(`SELECT id, slug, title, description, category, status, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude, created_at FROM services WHERE ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`, [...params, limit, offset]);
         // Convert relative image paths to full URLs
-        const baseUrl = process.env.BACKEND_URL ||
-            `http://localhost:${process.env.PORT || 4000}`;
+        const baseUrl = process.env.BACKEND_URL;
         const processedRows = rows.map((service) => ({
             ...service,
             image: service.image && service.image.startsWith("/uploads/")
@@ -150,8 +145,7 @@ router.get("/:slug", optionalAuth, async (req, res) => {
             }
         }
         // Convert relative image paths to full URLs
-        const baseUrl = process.env.BACKEND_URL ||
-            `http://localhost:${process.env.PORT || 4000}`;
+        const baseUrl = process.env.BACKEND_URL;
         const processedService = {
             ...service,
             image: service.image && service.image.startsWith("/uploads/")
@@ -165,163 +159,6 @@ router.get("/:slug", optionalAuth, async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
-// Create service - service provider or admin
-// router.post(
-//   "/",
-//   requireAuth,
-//   requireRole("service_provider", "admin"),
-//   upload.single("image"), // Handle file upload
-//   [
-//     body("title").isLength({ min: 1 }),
-//     body("description").optional().isLength({ min: 1 }),
-//     body("category").isIn([
-//       "shop",
-//       "cleaning",
-//       "shopping",
-//       "transport",
-//       "repair",
-//       "delivery",
-//       "tutoring",
-//       "health",
-//       "food",
-//       "events",
-//       "home",
-//       "education",
-//       "technology",
-//       "finance",
-//       "legal",
-//       "travel",
-//       "entertainment",
-//       "beauty",
-//       "other",
-//     ]),
-//     body("delivery_fee").optional().isFloat({ min: 0 }),
-//     body("color").optional().isLength({ min: 1 }),
-//     body("bg_color").optional().isLength({ min: 1 }),
-//     body("color_hex").optional().isLength({ min: 1 }),
-//     body("fields")
-//       .optional()
-//       .custom((value) => {
-//         if (!value) return true; // Allow empty
-//         try {
-//           const parsed = JSON.parse(value);
-//           if (Array.isArray(parsed)) return true;
-//           throw new Error("Fields must be a valid JSON array");
-//         } catch (e) {
-//           throw new Error("Fields must be a valid JSON array");
-//         }
-//       }),
-//     body("owner_name").isLength({ min: 1 }),
-//     body("latitude").optional().isFloat({ min: -90, max: 90 }),
-//     body("longitude").optional().isFloat({ min: -180, max: 180 }),
-//     body("status").optional().isIn(["active", "inactive"]),
-//   ],
-//   async (req: AuthRequest, res: Response) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() });
-//     }
-//     try {
-//       const {
-//         title,
-//         description,
-//         category,
-//         delivery_fee,
-//         color,
-//         bg_color,
-//         color_hex,
-//         fields,
-//         owner_name,
-//         latitude,
-//         longitude,
-//         status,
-//       } = req.body;
-//       // FIX: Check if user exists first
-//       if (!req.user) {
-//         return res.status(401).json({ error: "Unauthorized" });
-//       }
-//       const ownerId = req.user.user_id;
-//       // FIX: Validate ownerId is not undefined
-//       if (!ownerId) {
-//         console.error("ownerId is undefined. req.user:", req.user);
-//         return res.status(400).json({ error: "Invalid user ID" });
-//       }
-//       // Handle image upload
-//       let imagePath = null;
-//       if (req.file) {
-//         imagePath = `/uploads/${req.file.filename}`;
-//       }
-//       // Ensure optional fields are null if not provided
-//       const safeDescription = description || null;
-//       const safeDeliveryFee = delivery_fee || null;
-//       const safeColor = color || null;
-//       const safeBgColor = bg_color || null;
-//       const safeColorHex = color_hex || null;
-//       const safeFields = fields || [];
-//       const safeLatitude = latitude || null;
-//       const safeLongitude = longitude || null;
-//       // Generate slug from title
-//       const slug = title
-//         .toLowerCase()
-//         .replace(/[^a-z0-9]+/g, "-")
-//         .replace(/^-+|-+$/g, "");
-//       // Check if slug is unique
-//       const [existing] = await pool.execute(
-//         "SELECT id FROM services WHERE slug = ? AND deleted_at IS NULL",
-//         [slug]
-//       );
-//       if ((existing as any[]).length > 0) {
-//         return res.status(409).json({ error: "Slug already exists" });
-//       }
-//       const params = [
-//         slug,
-//         title,
-//         safeDescription,
-//         category,
-//         safeDeliveryFee,
-//         safeColor,
-//         safeBgColor,
-//         safeColorHex,
-//         imagePath,
-//         JSON.stringify(safeFields),
-//         ownerId,
-//         owner_name,
-//         safeLatitude,
-//         safeLongitude,
-//       ];
-//       console.log("Params before execution:", params);
-//       const [result] = await pool.execute(
-//         "INSERT INTO services (slug, title, description, category, delivery_fee, color, bg_color, color_hex, image, fields, owner_id, owner_name, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-//         params
-//       );
-//       const serviceId = (result as any).insertId;
-//       res.status(201).json({
-//         service: {
-//           id: serviceId,
-//           slug,
-//           title,
-//           description,
-//           category,
-//           delivery_fee,
-//           color,
-//           bg_color,
-//           color_hex,
-//           image: imagePath,
-//           fields,
-//           owner_id: ownerId,
-//           owner_name,
-//           latitude,
-//           longitude,
-//           created_at: new Date().toISOString(),
-//           updated_at: new Date().toISOString(),
-//         },
-//       });
-//     } catch (error) {
-//       console.error("Create service error:", error);
-//       res.status(500).json({ error: "Internal server error" });
-//     }
-//   }
-// );
 router.post("/add-service", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), upload.single("image"), [
     (0, express_validator_1.body)("title").notEmpty(),
     (0, express_validator_1.body)("category").isIn([
@@ -508,14 +345,14 @@ async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-// Delete service - provider (owner) or admin (soft delete)
-router.delete("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), async (req, res) => {
+// Check for associated orders before deletion - provider (owner) or admin
+router.get("/:id/delete-check", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), async (req, res) => {
     try {
         const { id } = req.params;
         const user_id = req.user.user_id;
         const userRole = req.user.role;
         // Check ownership
-        const [serviceRows] = await db_1.pool.execute("SELECT owner_id FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
+        const [serviceRows] = await db_1.pool.execute("SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
         if (serviceRows.length === 0) {
             return res.status(404).json({ error: "Service not found" });
         }
@@ -523,15 +360,58 @@ router.delete("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_prov
         if (userRole !== "admin" && service.owner_id !== user_id) {
             return res.status(403).json({ error: "Forbidden" });
         }
-        // Check for existing orders
-        const [orderRows] = await db_1.pool.execute("SELECT id FROM order_items WHERE service_id = ? LIMIT 1", [id]);
-        if (orderRows.length > 0) {
-            return res
-                .status(409)
-                .json({ error: "Cannot delete service with existing orders" });
+        // Count associated orders
+        const [orderCountRows] = await db_1.pool.execute("SELECT COUNT(DISTINCT o.id) as order_count FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.service_id = ? AND o.deleted_at IS NULL", [id]);
+        const orderCount = orderCountRows[0].order_count;
+        if (orderCount > 0) {
+            res.json({
+                warning: true,
+                message: `This service has ${orderCount} associated order(s). Deleting this service will also delete these orders and cannot be undone.`,
+                order_count: orderCount,
+                service_title: service.title,
+            });
         }
+        else {
+            res.json({
+                warning: false,
+                message: "No associated orders found. Service can be safely deleted.",
+                order_count: 0,
+                service_title: service.title,
+            });
+        }
+    }
+    catch (error) {
+        console.error("Delete check error:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+// Delete service - provider (owner) or admin (soft delete with cascading)
+router.delete("/:id", auth_1.requireAuth, (0, roles_1.requireRole)("service_provider", "admin"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user_id = req.user.user_id;
+        const userRole = req.user.role;
+        // Check ownership
+        const [serviceRows] = await db_1.pool.execute("SELECT owner_id, title FROM services WHERE id = ? AND deleted_at IS NULL", [id]);
+        if (serviceRows.length === 0) {
+            return res.status(404).json({ error: "Service not found" });
+        }
+        const service = serviceRows[0];
+        if (userRole !== "admin" && service.owner_id !== user_id) {
+            return res.status(403).json({ error: "Forbidden" });
+        }
+        // Get count of orders that will be affected
+        const [orderCountRows] = await db_1.pool.execute("SELECT COUNT(DISTINCT o.id) as order_count FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.service_id = ? AND o.deleted_at IS NULL", [id]);
+        const orderCount = orderCountRows[0].order_count;
+        // Soft delete the service (this will cascade to order_items due to FK constraints)
         await db_1.pool.execute("UPDATE services SET deleted_at = NOW() WHERE id = ?", [id]);
-        res.json({ message: "Service deleted successfully" });
+        // Soft delete associated orders (since order_items are deleted via CASCADE, orders may become empty)
+        await db_1.pool.execute("UPDATE orders SET deleted_at = NOW() WHERE id IN (SELECT DISTINCT o.id FROM orders o JOIN order_items oi ON o.id = oi.order_id WHERE oi.service_id = ?)", [id]);
+        res.json({
+            message: "Service deleted successfully",
+            affected_orders: orderCount,
+            service_title: service.title,
+        });
     }
     catch (error) {
         console.error("Delete service error:", error);
@@ -577,8 +457,7 @@ router.get("/owner/:owner_id", auth_1.requireAuth, async (req, res) => {
          ORDER BY created_at DESC
          LIMIT ? OFFSET ?`, [...params, limit, offset]);
         // Convert relative image paths to full URLs
-        const baseUrl = process.env.BACKEND_URL ||
-            `http://localhost:${process.env.PORT || 4000}`;
+        const baseUrl = process.env.BACKEND_URL;
         const processedRows = rows.map((service) => ({
             ...service,
             image: service.image && service.image.startsWith("/uploads/")

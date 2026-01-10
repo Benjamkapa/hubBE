@@ -391,7 +391,7 @@ router.get("/track/:id", rateLimit_1.globalLimiter, async (req, res) => {
             const token = parts[1];
             let decoded;
             try {
-                decoded = jwt.verify(token, process.env.JWT_SECRET || "please_change_this");
+                decoded = jwt.verify(token, process.env.JWT_SECRET || "please_change_this_one");
             }
             catch (err) {
                 return res.status(401).json({ error: "Invalid token" });
